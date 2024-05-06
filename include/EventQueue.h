@@ -39,5 +39,7 @@ private:
     EventStruct Events[QUEUE_SIZE];
 };
 
+extern EventQueue  queue;
+
 #endif	/* EVENTQUEUE_H */
 

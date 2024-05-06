@@ -57,7 +57,7 @@ build: .build-post
 # Add your pre 'build' code here...
 
 .build-post: .build-impl
-	avr-size dist/default/production/at90usb.X.production.elf ./dist/default/debug/at90usb.X.debug.elf
+	#avr-size dist/default/production/at90usb.X.production.elf ./dist/default/debug/at90usb.X.debug.elf
 	
 # Add your post 'build' code here...
 

@@ -8,11 +8,18 @@
 #include "ClockMod.h"
 
 ClockMod::ClockMod() {
+    // Disable prescaler
+    CLKPR = 0;
+    
+    // Enable PLL
+    PLLCSR = (6 << PLLP0) | (1 << PLLE);
 }
 
-ClockMod::ClockMod(const ClockMod& orig) {
-}
+//ClockMod::ClockMod(const ClockMod& orig) {
+//}
+//
+//ClockMod::~ClockMod() {
+//}
 
-ClockMod::~ClockMod() {
-}
+
 

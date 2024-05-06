@@ -7,6 +7,9 @@
 
 #include "EventQueue.h"
 
+EventQueue  queue;
+
+
 EventQueue::EventQueue() {
     Flags.Empty = 1;
 }

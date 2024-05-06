@@ -40,5 +40,7 @@ private:
 
 };
 
+extern AdcMod Adc;
+
 #endif	/* ADCMOD_H */
 

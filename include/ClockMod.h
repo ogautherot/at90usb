@@ -8,11 +8,21 @@
 #ifndef CLOCKMOD_H
 #define	CLOCKMOD_H
 
+#include <stdint.h>
+
+#include <avr/io.h>
+#include <avr/interrupt.h>
+
 class ClockMod {
 public:
     ClockMod();
-    ClockMod(const ClockMod& orig);
-    virtual ~ClockMod();
+    //ClockMod(const ClockMod& orig);
+    //virtual ~ClockMod();
+    
+    void Init(void);
+    void StartPll(void);
+    
+    
 private:
 
 };

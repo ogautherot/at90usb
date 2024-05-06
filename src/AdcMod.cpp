@@ -10,9 +10,5 @@
 AdcMod::AdcMod() {
 }
 
-AdcMod::AdcMod(const AdcMod& orig) {
-}
-
-AdcMod::~AdcMod() {
-}
+AdcMod Adc;
 
