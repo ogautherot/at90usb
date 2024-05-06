@@ -8,9 +8,21 @@
 
 #include <avr/io.h>
 
+#include "EventQueue.h"
+
+extern "C"  {
+    int main(void);
+}
+
+
+EventQueue  queue;
+
 
 int main(void) {
     /* Replace with your application code */
     while (1) {
+        if (!queue.IsEmpty())   {
+            
+        }
     }
 }
