@@ -1,5 +1,6 @@
 
 #include <avr/io.h>
+#include <avr/interrupt.h>
 
 #include <stdint.h>
 #include <string.h>
@@ -33,8 +34,10 @@ int8_t EepromGetBlock(uint8_t *dest, uint16_t addr, uint16_t size)
     EEAR = addr;
 
     while (size > 0)    {
+        cli();
         EECR = 1 << EERE;
         *dest = EEDR;
+        sei();
         size--;
         dest++;
     }
@@ -42,20 +45,19 @@ int8_t EepromGetBlock(uint8_t *dest, uint16_t addr, uint16_t size)
 }
 
 
-static inline int8_t  EepromIsBusy(void)
-{
-    return (EECR & (1 << EEPE)) | (SPMCSR & SPMEN);
-}
+#define EEPROM_IS_BUSY  ((EECR & (1 << EEPE)) | (SPMCSR & SPMEN))
 
 
 int8_t  EepromProcessBlock(uint16_t addr, uint8_t mode, int16_t size)
 {
     int8_t ret = -1;
 
-    if (!EepromIsBusy())    {
+    if (!EEPROM_IS_BUSY)    {
         if (size > 0) {
+            cli();
             EEAR = addr;
             EepromCmd(mode);
+            sei();
         }
         ret = 0;
     }
