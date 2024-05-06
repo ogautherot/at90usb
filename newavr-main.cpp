@@ -21,8 +21,11 @@ EventQueue  queue;
 int main(void) {
     /* Replace with your application code */
     while (1) {
+        EventQueue ev;
+        
         if (!queue.IsEmpty())   {
-            
+            queue.Pop(&ev);
         }
+        sleep_mode();
     }
 }

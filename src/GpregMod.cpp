@@ -7,12 +7,5 @@
 
 #include "GpregMod.h"
 
-GpregMod::GpregMod() {
-}
-
-GpregMod::GpregMod(const GpregMod& orig) {
-}
-
-GpregMod::~GpregMod() {
-}
+//GpregMod Gpreg;
 
