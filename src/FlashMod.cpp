@@ -7,12 +7,5 @@
 
 #include "FlashMod.h"
 
-FlashMod::FlashMod() {
-}
 
-FlashMod::FlashMod(const FlashMod& orig) {
-}
-
-FlashMod::~FlashMod() {
-}
 

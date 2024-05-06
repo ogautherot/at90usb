@@ -4,6 +4,9 @@
 #include <stdint.h>
 #include <string.h>
 
+#include "FlashMod.h"
+#include "EepromMod.h"
+
 #define EEP_MODE_ERASE          (1 << EEPM0)
 #define EEP_MODE_WRITE          (2 << EEPM0)
 #define EEP_MODE_ERASE_WRITE    (0 << EEPM0)
