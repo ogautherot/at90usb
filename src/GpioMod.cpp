@@ -10,9 +10,9 @@
 GpioMod::GpioMod() {
 }
 
-GpioMod::GpioMod(const GpioMod& orig) {
-}
+//GpioMod::GpioMod(const GpioMod& orig) {
+//}
 
-GpioMod::~GpioMod() {
-}
+//GpioMod::~GpioMod() {
+//}
 

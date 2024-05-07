@@ -10,9 +10,9 @@
 SpiMod::SpiMod() {
 }
 
-SpiMod::SpiMod(const SpiMod& orig) {
-}
+//SpiMod::SpiMod(const SpiMod& orig) {
+//}
 
-SpiMod::~SpiMod() {
-}
+//SpiMod::~SpiMod() {
+//}
 

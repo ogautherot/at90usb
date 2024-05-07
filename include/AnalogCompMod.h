@@ -11,8 +11,8 @@
 class AnalogCompMod {
 public:
     AnalogCompMod();
-    AnalogCompMod(const AnalogCompMod& orig);
-    virtual ~AnalogCompMod();
+    //AnalogCompMod(const AnalogCompMod& orig);
+    //virtual ~AnalogCompMod();
 private:
 
 };

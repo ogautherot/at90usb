@@ -15,8 +15,8 @@
 
 typedef struct EventStruct    {
     uint8_t     EvType;
-    uint8_t     Arg1;
-    uint16_t    Arg2;
+    uint8_t     Arg0;
+    uint16_t    Arg1;
 } EventStruct;
 
 
@@ -25,7 +25,7 @@ public:
     EventQueue();
     bool IsEmpty(void);
     
-    int8_t Push(EventStruct *ev);
+    int8_t Push(uint8_t t, uint8_t arg0, uint16_t arg1);
     int8_t Pop(EventStruct *ev);
     
 private:
@@ -39,7 +39,12 @@ private:
     EventStruct Events[QUEUE_SIZE];
 };
 
-extern EventQueue  queue;
+typedef enum EventId {
+    TIMER0_ELAPSED = 1,
+} EventId;
+
+
+extern EventQueue  Queue;
 
 #endif	/* EVENTQUEUE_H */
 

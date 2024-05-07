@@ -10,9 +10,9 @@
 PowerMgmtMod::PowerMgmtMod() {
 }
 
-PowerMgmtMod::PowerMgmtMod(const PowerMgmtMod& orig) {
-}
+//PowerMgmtMod::PowerMgmtMod(const PowerMgmtMod& orig) {
+//}
 
-PowerMgmtMod::~PowerMgmtMod() {
-}
+//PowerMgmtMod::~PowerMgmtMod() {
+//}
 

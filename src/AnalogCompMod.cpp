@@ -10,9 +10,10 @@
 AnalogCompMod::AnalogCompMod() {
 }
 
-AnalogCompMod::AnalogCompMod(const AnalogCompMod& orig) {
-}
+//AnalogCompMod::AnalogCompMod(const AnalogCompMod& orig) {
+//}
 
-AnalogCompMod::~AnalogCompMod() {
-}
+//AnalogCompMod::~AnalogCompMod() {
+//}
+
 

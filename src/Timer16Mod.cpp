@@ -10,9 +10,9 @@
 Timer16Mod::Timer16Mod() {
 }
 
-Timer16Mod::Timer16Mod(const Timer16Mod& orig) {
-}
+//Timer16Mod::Timer16Mod(const Timer16Mod& orig) {
+//}
 
-Timer16Mod::~Timer16Mod() {
-}
+//Timer16Mod::~Timer16Mod() {
+//}
 

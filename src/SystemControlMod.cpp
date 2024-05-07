@@ -10,9 +10,9 @@
 SystemControlMod::SystemControlMod() {
 }
 
-SystemControlMod::SystemControlMod(const SystemControlMod& orig) {
-}
+//SystemControlMod::SystemControlMod(const SystemControlMod& orig) {
+//}
 
-SystemControlMod::~SystemControlMod() {
-}
+//SystemControlMod::~SystemControlMod() {
+//}
 

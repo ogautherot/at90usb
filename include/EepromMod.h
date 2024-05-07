@@ -23,6 +23,7 @@ public:
     EepromMod() { }
     //EepromMod(const EepromMod& orig);
     //virtual ~EepromMod();
+ 
     static uint8_t GetByte(uint16_t addr);
     static int8_t Get(uint8_t *dest, uint16_t addr, uint16_t len);
 

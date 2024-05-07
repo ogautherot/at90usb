@@ -7,7 +7,7 @@
 
 #include "EventQueue.h"
 
-EventQueue  queue;
+EventQueue  Queue;
 
 
 EventQueue::EventQueue() {
@@ -19,14 +19,16 @@ bool EventQueue::IsEmpty(void)
     return Flags.Empty;
 }
 
-int8_t EventQueue::Push(EventStruct *ev)
+int8_t EventQueue::Push(uint8_t t, uint8_t arg0, uint16_t arg1)
 {
     if (Flags.Full) {
         Flags.Overflow = 1;
         return -1;
     }
     
-    *((uint32_t *) &Events[IdxIn]) = *((uint32_t *) ev);
+    Events[IdxIn].EvType = t;
+    Events[IdxIn].Arg0 = arg0;
+    Events[IdxIn].Arg1 = arg1;
     
     IdxIn = (IdxIn + 1) & (QUEUE_SIZE - 1);
     Flags.Empty = 0;
@@ -50,5 +52,4 @@ int8_t EventQueue::Pop(EventStruct *ev)
     
     return 0;
 }
-
 

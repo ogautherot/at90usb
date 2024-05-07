@@ -11,8 +11,8 @@
 class TwiMod {
 public:
     TwiMod();
-    TwiMod(const TwiMod& orig);
-    virtual ~TwiMod();
+    //TwiMod(const TwiMod& orig);
+    //virtual ~TwiMod();
 private:
 
 };

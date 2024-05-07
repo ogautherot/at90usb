@@ -10,9 +10,9 @@
 UsbDeviceMod::UsbDeviceMod() {
 }
 
-UsbDeviceMod::UsbDeviceMod(const UsbDeviceMod& orig) {
-}
+//UsbDeviceMod::UsbDeviceMod(const UsbDeviceMod& orig) {
+//}
 
-UsbDeviceMod::~UsbDeviceMod() {
-}
+//UsbDeviceMod::~UsbDeviceMod() {
+//}
 

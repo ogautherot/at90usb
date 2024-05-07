@@ -11,8 +11,8 @@
 class PowerMgmtMod {
 public:
     PowerMgmtMod();
-    PowerMgmtMod(const PowerMgmtMod& orig);
-    virtual ~PowerMgmtMod();
+    //PowerMgmtMod(const PowerMgmtMod& orig);
+    //virtual ~PowerMgmtMod();
 private:
 
 };

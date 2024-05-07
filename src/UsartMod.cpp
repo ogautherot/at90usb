@@ -10,9 +10,9 @@
 UsartMod::UsartMod() {
 }
 
-UsartMod::UsartMod(const UsartMod& orig) {
-}
+//UsartMod::UsartMod(const UsartMod& orig) {
+//}
 
-UsartMod::~UsartMod() {
-}
+//UsartMod::~UsartMod() {
+//}
 

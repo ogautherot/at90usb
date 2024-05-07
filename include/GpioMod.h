@@ -11,8 +11,8 @@
 class GpioMod {
 public:
     GpioMod();
-    GpioMod(const GpioMod& orig);
-    virtual ~GpioMod();
+    //GpioMod(const GpioMod& orig);
+    //virtual ~GpioMod();
 private:
 
 };

@@ -11,8 +11,8 @@
 class UsartMod {
 public:
     UsartMod();
-    UsartMod(const UsartMod& orig);
-    virtual ~UsartMod();
+    //UsartMod(const UsartMod& orig);
+    //virtual ~UsartMod();
 private:
 
 };

@@ -10,9 +10,9 @@
 TwiMod::TwiMod() {
 }
 
-TwiMod::TwiMod(const TwiMod& orig) {
-}
+//TwiMod::TwiMod(const TwiMod& orig) {
+//}
 
-TwiMod::~TwiMod() {
-}
+//TwiMod::~TwiMod() {
+//}
 

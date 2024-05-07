@@ -10,9 +10,9 @@
 OcmMod::OcmMod() {
 }
 
-OcmMod::OcmMod(const OcmMod& orig) {
-}
+//OcmMod::OcmMod(const OcmMod& orig) {
+//}
 
-OcmMod::~OcmMod() {
-}
+//OcmMod::~OcmMod() {
+//}
 

@@ -11,8 +11,8 @@
 class OcmMod {
 public:
     OcmMod();
-    OcmMod(const OcmMod& orig);
-    virtual ~OcmMod();
+    //OcmMod(const OcmMod& orig);
+    //virtual ~OcmMod();
 private:
 
 };

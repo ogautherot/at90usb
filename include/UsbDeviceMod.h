@@ -11,8 +11,8 @@
 class UsbDeviceMod {
 public:
     UsbDeviceMod();
-    UsbDeviceMod(const UsbDeviceMod& orig);
-    virtual ~UsbDeviceMod();
+    //UsbDeviceMod(const UsbDeviceMod& orig);
+    //virtual ~UsbDeviceMod();
 private:
 
 };

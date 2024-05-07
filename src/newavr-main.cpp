@@ -53,8 +53,8 @@ int main(void) {
     while (1) {
         EventStruct ev;
         
-        if (!queue.IsEmpty())   {
-            queue.Pop(&ev);
+        if (!Queue.IsEmpty())   {
+            Queue.Pop(&ev);
         }
         //sleep_mode();
     }

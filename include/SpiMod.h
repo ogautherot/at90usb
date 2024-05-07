@@ -11,8 +11,8 @@
 class SpiMod {
 public:
     SpiMod();
-    SpiMod(const SpiMod& orig);
-    virtual ~SpiMod();
+    //SpiMod(const SpiMod& orig);
+    //virtual ~SpiMod();
 private:
 
 };

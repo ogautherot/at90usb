@@ -11,8 +11,8 @@
 class SystemControlMod {
 public:
     SystemControlMod();
-    SystemControlMod(const SystemControlMod& orig);
-    virtual ~SystemControlMod();
+    //SystemControlMod(const SystemControlMod& orig);
+    //virtual ~SystemControlMod();
 private:
 
 };
