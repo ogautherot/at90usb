@@ -9,14 +9,19 @@
 
 
 #define EEPROM_CMD(mode)    \
-    { EECR = mode | (1 << EEMPE);   \
-    EECR = mode | (1 << EEPE);  }
+    { EECR = mode | (1 << EEMPE); EECR = mode | (1 << EEPE);  }
 
 
 static uint16_t EepromStepCount = 0;
 static uint8_t  EepromStepCmd = 0;
 static uint8_t  *EepromSrcBuf = NULL;
 
+
+EepromMod::EepromMod()
+{
+    EECR = 0;
+    // Ignore EEDR, EEARL and EEARH
+}
 
 uint8_t EepromMod::GetByte(uint16_t addr)
 {
@@ -28,10 +33,6 @@ uint8_t EepromMod::GetByte(uint16_t addr)
 
 int8_t EepromMod::Get(uint8_t *dest, uint16_t addr, uint16_t size)
 {
-    if (size == 0)   {
-        return 0;
-    }
-
     EEAR = addr;
 
     while (size > 0)    {
@@ -49,10 +50,12 @@ int8_t  EepromMod::ProcessBlock(uint16_t addr, uint8_t mode, int16_t size)
 {
     int8_t ret = -1;
 
-    if (!IsBusy())    {
+    if (!EEPROM_IS_BUSY)    {
         if (size > 0) {
+            cli();
             EEAR = addr;
             EEPROM_CMD(mode);
+            sei();
         }
         ret = 0;
     }
@@ -82,4 +85,8 @@ int8_t EepromMod::Step(void)
     return 0;
 }
 
+ISR(EE_READY_vect)
+{
+    
+}
 

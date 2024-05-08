@@ -32,6 +32,34 @@ public:
     //virtual ~Timer16Mod();
 
     void Init(uint8_t prescaler, uint16_t period);
+
+    uint16_t GetInputCapture1(uint8_t idx)
+    {
+        return (idx == 1) ? ICR1 :
+                (idx == 3) ? ICR3 :
+                0;
+    }
+    
+    void SetOutputCompare(uint8_t timer, uint8_t oc, uint16_t val)
+    {
+        if (timer == 1) {
+            if (oc == 1)    {
+                OCR1A = val;
+            } else if (oc == 2)    {
+                OCR1B = val;
+            } else if (oc == 3)    {
+                OCR1C = val;
+            }
+        } else if (timer == 3)  {
+            if (oc == 1)    {
+                OCR3A = val;
+            } else if (oc == 2)    {
+                OCR3B = val;
+            } else if (oc == 3)    {
+                OCR3C = val;
+            }
+        }
+    }
     
 private:
 

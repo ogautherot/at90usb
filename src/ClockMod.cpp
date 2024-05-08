@@ -15,11 +15,9 @@ ClockMod::ClockMod() {
     PLLCSR = (6 << PLLP0) | (1 << PLLE);
 }
 
-//ClockMod::ClockMod(const ClockMod& orig) {
-//}
-//
-//ClockMod::~ClockMod() {
-//}
+//ClockMod::ClockMod(const ClockMod& orig) { }
+
+//ClockMod::~ClockMod() { }
 
 
 

@@ -8,6 +8,10 @@
 #ifndef SPIMOD_H
 #define	SPIMOD_H
 
+#include <avr/io.h>
+#include <avr/interrupt.h>
+
+
 class SpiMod {
 public:
     SpiMod();

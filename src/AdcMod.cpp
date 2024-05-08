@@ -7,8 +7,19 @@
 
 #include "AdcMod.h"
 
-AdcMod::AdcMod() {
-}
-
 AdcMod Adc;
 
+AdcMod::AdcMod() {
+    ADMUX = 0xc0;
+    ADCSRA = 0xcf;
+    ADCSRB = 0;
+    DIDR0 = 0x07;
+    DIDR1 = 0x00;
+}
+
+#if 0
+ISR(ADC_vect)
+{
+    uint16_t val = ADC;
+}
+#endif

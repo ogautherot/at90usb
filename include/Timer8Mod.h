@@ -33,13 +33,29 @@ public:
 
     int8_t      SetTimer(uint8_t t, uint8_t arg0);
 
-private:
-    uint8_t     tccra;
-    uint8_t     tccrb;
-    uint8_t     tcnt;
-    uint8_t     ocra;
-    uint8_t     ocrb;
+    void SetOutputCompare(uint8_t timer, uint8_t oc, uint8_t val)
+    {
+        if (timer == 0) {
+            if (oc == 1)    {
+                OCR0A = val;
+            } else if (oc == 2)    {
+                OCR0B = val;
+            }
+        } else if (timer == 2)  {
+            if (oc == 1)    {
+                OCR2A = val;
+            } else if (oc == 2)    {
+                OCR2B = val;
+            }
+        }
+    }
+    
+    uint8_t GetASSR()
+    {
+        return ASSR;
+    }
 
+private:
     uint8_t     EventArg0;
 };
 

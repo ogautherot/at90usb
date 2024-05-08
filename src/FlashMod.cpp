@@ -8,4 +8,13 @@
 #include "FlashMod.h"
 
 
+FlashMod::FlashMod()
+{
+    SPMCSR = 0;
+}
+
+ISR(SPM_READY_vect)
+{
+    
+}
 

@@ -8,6 +8,8 @@
 #include "UsartMod.h"
 
 UsartMod::UsartMod() {
+    UBRR1 = 0;
+    UCSR1C = 0;
 }
 
 //UsartMod::UsartMod(const UsartMod& orig) {
@@ -15,4 +17,19 @@ UsartMod::UsartMod() {
 
 //UsartMod::~UsartMod() {
 //}
+
+ISR(USART1_RX_vect)
+{
+    
+}
+
+ISR(USART1_UDRE_vect)
+{
+    
+}
+
+ISR(USART1_TX_vect)
+{
+    
+}
 
