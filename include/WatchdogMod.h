@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   WatchdogMod.h
  * Author: olivier
  *
@@ -6,19 +6,29 @@
  */
 
 #ifndef WATCHDOGMOD_H
-#define	WATCHDOGMOD_H
+#define WATCHDOGMOD_H
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-class WatchdogMod {
+class WatchdogMod
+{
 public:
-    WatchdogMod();
-    WatchdogMod(const WatchdogMod& orig);
+    WatchdogMod {}
+    // WatchdogMod(const WatchdogMod &orig);
     virtual ~WatchdogMod();
-private:
 
+    void WatchdogEnable(void)
+    {
+        wdt_enable(WDP3); // Timeout: 4s
+    }
+
+    void WatchdogReset(void)
+    {
+        wdt_reset();
+    }
+
+private:
 };
 
-#endif	/* WATCHDOGMOD_H */
-
+#endif /* WATCHDOGMOD_H */
