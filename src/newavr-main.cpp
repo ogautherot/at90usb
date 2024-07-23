@@ -22,18 +22,18 @@ extern "C"
 
 FUSES = {
     .low =
-        FUSE_CKSEL2 & FUSE_CKSEL3 & // CKSEL = 1111 for 16MHz crystal (FUSE_CKSELn)
-        FUSE_SUT1 & FUSE_CKSEL2 &   // SUT = 10 for 14 cycles after reset (fastest)
-        FUSE_CKOUT &                // Allow CKOUT (FUSE_CKOUT)
-        FUSE_CKDIV8,                // FUSE_CKDIV8 unprogrammed
+        FUSE_CKSEL2 & FUSE_CKSEL3 & // CKSEL[3:1] = 110 for 8MHz crystal (FUSE_CKSELn)
+        FUSE_SUT1 & FUSE_CKSEL0 &   // SUT = 10 for 14 cycles after reset (fastest)
+        FUSE_CKOUT,                 // &                // Allow CKOUT (FUSE_CKOUT)
+    // FUSE_CKDIV8,                // FUSE_CKDIV8 unprogrammed
 
     .high =
-        0xff &                        // FUSE_BOOTRST: Move boot to upper flash
-        FUSE_BOOTSZ0 & FUSE_BOOTSZ1 & // 11: 512 words, 10: 1K, 01: 2K, 00: 4K
-        // 0xff &                   // FUSE_BOOTSZn: boot loader section size (128 words/page), 11 =
-        FUSE_EESAVE &             // Preserve EEPROM upon flash erase
-        0xff &                    // FUSE_WDTON: enable interrupts
-        FUSE_SPIEN & FUSE_JTAGEN, // Enable JTAG and SPI
+        // 0xff &                        // FUSE_BOOTRST: Move boot to upper flash
+    FUSE_BOOTSZ0 & FUSE_BOOTSZ1 & // 11: 512 words, 10: 1K, 01: 2K, 00: 4K
+    // 0xff &                   // FUSE_BOOTSZn: boot loader section size (128 words/page), 11 =
+    // FUSE_EESAVE &             // Preserve EEPROM upon flash erase
+    FUSE_WDTON &                           // enable interrupts
+    FUSE_SPIEN & FUSE_JTAGEN & FUSE_OCDEN, // Enable JTAG and SPI
     .extended =
         FUSE_BODLEVEL2 & // FUSE_BODLEVELn: 111 to disable
         FUSE_HWBE        // FUSE_HWBE: Hardware Boot Enable
@@ -83,7 +83,7 @@ void SysInit(void)
 
     PortsInit();
 
-    ClockInit();
+    // ClockInit();
     lcd.Init();
     sei();
 }
@@ -103,6 +103,8 @@ void SystemError(void)
  */
 int main(void)
 {
+    SysInit();
+
     /* Replace with your application code */
     while (1)
     {

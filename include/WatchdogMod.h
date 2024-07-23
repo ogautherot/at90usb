@@ -10,11 +10,12 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <avr/wdt.h>
 
 class WatchdogMod
 {
 public:
-    WatchdogMod {}
+    WatchdogMod() {}
     // WatchdogMod(const WatchdogMod &orig);
     virtual ~WatchdogMod();
 
