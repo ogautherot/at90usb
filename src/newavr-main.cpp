@@ -73,6 +73,8 @@ void PortsInit(void)
  */
 void SysInit(void)
 {
+    Lcd1602Driver lcd;
+
     set_sleep_mode(SLEEP_MODE_IDLE);
     sleep_enable();
 
@@ -82,6 +84,7 @@ void SysInit(void)
     PortsInit();
 
     ClockInit();
+    lcd.Init();
     sei();
 }
 
