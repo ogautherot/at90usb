@@ -39,7 +39,7 @@ private:
 };
 
 typedef enum EventId {
-    TIMER0_ELAPSED = 1,
+    TIMER0_ELAPSED = 1
 } EventId;
 
 

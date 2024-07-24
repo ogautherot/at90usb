@@ -2,35 +2,91 @@
 
 #include "Lcd1602.h"
 
-void Lcd1602Driver::SetData(uint8_t v)
+static void ClearE(void)
 {
-    uint8_t mask = LCD1602_DATA_PORT & ~LCD1602_DATA_MASK;
+    LCD1602_CTRL_PORT &= ~LCD1602_E_MASK;
+}
+
+static void SetE(void)
+{
+    LCD1602_CTRL_PORT |= LCD1602_E_MASK;
+}
+
+static void SetDataDir(uint8_t _dir_in)
+{
+    if (_dir_in)
+    {
+        LCD1602_DATA_DIR &= ~LCD1602_DATA_MASK;
+    }
+    else
+    {
+        LCD1602_DATA_DIR |= LCD1602_DATA_MASK;
+    }
+}
+
+static void SetLcdControlBus(uint8_t rs, uint8_t rw, uint8_t e)
+{
+    uint8_t mask = LCD1602_CTRL_PORT &
+                    ~(LCD1602_RS_MASK | LCD1602_RW_MASK | LCD1602_E_MASK) &
+                    LCD1602_CTRL_DIR;
+    
+    mask |= ((rs) ? LCD1602_RS_MASK : 0) |
+                    ((rw) ? LCD1602_RW_MASK : 0) |
+                    ((e) ? LCD1602_E_MASK : 0);
+    mask &= (((rs) ? ~LCD1602_RS_MASK : 0xff) &
+                    ((rw) ? ~LCD1602_RW_MASK : 0xff) &
+                    ((e) ? ~LCD1602_E_MASK : 0xff));
+    LCD1602_CTRL_PORT = mask;
+}
+
+static uint8_t GetBusy(void)
+{
+    uint8_t ret;
+    uint8_t dummy;
+    
+    SetDataDir(1);
+    SetLcdControlBus(0, 1, 0);
+    SetE();
+    _NOP();
+    _NOP();
+    ret = LCD1602_DATA_GET_D7;
+    ClearE();
+    
+    // Second cycle to close the transaction
+    SetE();
+    dummy = LCD1602_DATA_GET_D7;
+    ClearE();
+    SetDataDir(0);
+    
+    (void)dummy;
+    return ret;
+}
+
+void Lcd1602Driver::WaitForBusy(void)
+{
+    uint8_t count = 0;
+    
+    while (GetBusy())
+    {
+        count++;
+    }
+    return count;
+}
+
+static void SetData(uint8_t v)
+{
+    uint8_t mask = LCD1602_DATA_IN & ~LCD1602_DATA_MASK;
     mask |= v & 0x0f;
         
     LCD1602_DATA_PORT = mask;
 }
 
-void Lcd1602Driver::SetDataDir(uint8_t _dir_in)
+static void SetBusWidth(uint8_t width)
 {
-    if (_dir_in)
-    {
-        DDRA &= ~LCD1602_DATA_MASK;
-    }
-    else
-    {
-        DDRA |= LCD1602_DATA_MASK;
-    }
+    uint8_t cmd = (width > 4) ? 0x03 : 0x02;
+    SendCmd(cmd, 0);
 }
 
-void Lcd1602Driver::ClearE(void)
-{
-    LCD1602_CTRL_PORT &= ~LCD1602_E_MASK;
-}
-
-void Lcd1602Driver::SetE(void)
-{
-    LCD1602_CTRL_PORT |= LCD1602_E_MASK;
-}
 
 void Lcd1602Driver::SendChar(uint8_t c)
 {
@@ -93,12 +149,6 @@ void Lcd1602Driver::ClearDisplay(void)
         SendCmd(0x01, 1);
     }
 
-void Lcd1602Driver::SetBusWidth(uint8_t width)
-{
-    uint8_t cmd = (width > 4) ? 0x03 : 0x02;
-    SendCmd(cmd, 0);
-}
-
 void Lcd1602Driver::SendCmd(uint8_t pattern, uint8_t widetrx)
 {
     SetLcdControlBus(0, 0, 0);
@@ -113,51 +163,5 @@ void Lcd1602Driver::SendCmd(uint8_t pattern, uint8_t widetrx)
         SetData(pattern & 0x0f);
         ClearE();
     }
-}
-
-void Lcd1602Driver::WaitForBusy(void)
-{
-    while (GetBusy())
-    {
-        // Do nothing
-    }
-}
-
-uint8_t Lcd1602Driver::GetBusy(void)
-{
-    uint8_t ret;
-    uint8_t dummy;
-    
-    SetDataDir(1);
-    SetLcdControlBus(0, 1, 0);
-    SetE();
-    _NOP();
-    _NOP();
-    ret = LCD1602_DATA_GET_D7;
-    ClearE();
-    
-    // Second cycle to close the transaction
-    SetE();
-    dummy = LCD1602_DATA_GET_D7;
-    ClearE();
-    SetDataDir(0);
-    
-    (void)dummy;
-    return ret;
-}
-
-void Lcd1602Driver::SetLcdControlBus(uint8_t rs, uint8_t rw, uint8_t e)
-{
-    uint8_t mask = LCD1602_CTRL_PORT &
-                    ~(LCD1602_RS_MASK | LCD1602_RW_MASK | LCD1602_E_MASK) &
-                    LCD1602_CTRL_DIR;
-    
-    mask |= ((rs) ? LCD1602_RS_MASK : 0) |
-                    ((rw) ? LCD1602_RW_MASK : 0) |
-                    ((e) ? LCD1602_E_MASK : 0);
-    mask &= (((rs) ? ~LCD1602_RS_MASK : 0xff) &
-                    ((rw) ? ~LCD1602_RW_MASK : 0xff) &
-                    ((e) ? ~LCD1602_E_MASK : 0xff));
-    LCD1602_CTRL_PORT = mask;
 }
 

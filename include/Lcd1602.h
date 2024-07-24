@@ -17,7 +17,10 @@
 #define LCD1602_E_MASK 0x10
 
 #define LCD1602_DATA_PORT PORTC
+#define LCD1602_DATA_IN   PINC
+#define LCD1602_DATA_DIR  DDRC
 #define LCD1602_DATA_MASK 0x0f
+#define LCD1602_DATA_GET_D7 (PORTA & 0x80)
 
 // Bus handling
 /*
@@ -69,7 +72,6 @@
     } while (0)
 */
 
-#define LCD1602_DATA_GET_D7 (PORTA & 0x80)
 
 /** LCD driver class, for the typical 16x02 displays
  */
@@ -79,9 +81,9 @@ public:
     Lcd1602Driver() {}
     //virtual ~Lcd1602Driver() {}
 
-    void SetLcdControlBus(uint8_t rs, uint8_t rw, uint8_t e);
+    //void SetLcdControlBus(uint8_t rs, uint8_t rw, uint8_t e);
 
-    uint8_t GetBusy(void);
+    //uint8_t GetBusy(void);
 
     void WaitForBusy(void);
 
@@ -134,10 +136,10 @@ public:
     }
 
 private:
-    void SetE(void);
-    void ClearE(void);
-    void SetDataDir(uint8_t _dir_in);
-    void SetData(uint8_t v);
+    //void SetE(void);
+    //void ClearE(void);
+    //void SetDataDir(uint8_t _dir_in);
+    //void SetData(uint8_t v);
 
 };
 

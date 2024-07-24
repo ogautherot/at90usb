@@ -69,6 +69,6 @@ int8_t EventQueue::Pop(EventStruct *ev)
     }
     Flags = flags;
     
-    return 0;
+    return ret;
 }
 
