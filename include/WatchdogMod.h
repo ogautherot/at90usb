@@ -15,7 +15,10 @@
 class WatchdogMod
 {
 public:
-    WatchdogMod() {}
+
+    WatchdogMod()
+    {
+    }
     // WatchdogMod(const WatchdogMod &orig);
     virtual ~WatchdogMod();
 

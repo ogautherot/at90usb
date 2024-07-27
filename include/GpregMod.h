@@ -13,18 +13,24 @@
 
 #include <avr/io.h>
 
-
-class GpregMod {
+class GpregMod
+{
 public:
-    static void SetReg(uint8_t idx, uint8_t val)       {
-        switch (idx)    {
-            case 0:     GPIOR0 = val;   break;
-            case 1:     GPIOR1 = val;   break;
-            case 2:     GPIOR2 = val;   break;
+
+    static void SetReg(uint8_t idx, uint8_t val)
+    {
+        switch (idx) {
+        case 0: GPIOR0 = val;
+            break;
+        case 1: GPIOR1 = val;
+            break;
+        case 2: GPIOR2 = val;
+            break;
         }
     }
 
-    static uint8_t GetReg(uint8_t idx) {
+    static uint8_t GetReg(uint8_t idx)
+    {
         return (idx == 0) ? GPIOR0 :
                 (idx == 1) ? GPIOR1 :
                 (idx == 2) ? GPIOR2 :

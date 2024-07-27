@@ -7,14 +7,11 @@
 
 #include "FlashMod.h"
 
-
-FlashMod::FlashMod()
-{
+FlashMod::FlashMod() {
     SPMCSR = 0;
 }
 
-ISR(SPM_READY_vect)
-{
-    
+ISR(SPM_READY_vect) {
+
 }
 

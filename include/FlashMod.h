@@ -18,23 +18,23 @@ using namespace std;
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-
-class FlashMod {
+class FlashMod
+{
 public:
     FlashMod();
     // FlashMod(const FlashMod& orig);
     // virtual ~FlashMod();    
-    
+
     uint32_t GetSignature()
     {
-        return 0;  // See SPMCSR
+        return 0; // See SPMCSR
     }
-    
+
     // @TODO Implement page write and page erase
 
 private:
-    
-    
+
+
 };
 
 #endif	/* FLASHMOD_H */

@@ -13,24 +13,27 @@
 
 #define QUEUE_SIZE  8
 
+typedef union EventStruct
+{
+    uint32_t v;
 
-typedef union EventStruct    {
-    uint32_t    v;
-    struct EventFields    {
-        uint8_t     EvType;
-        uint8_t     Arg0;
-        uint16_t    Arg1;
+    struct EventFields
+    {
+        uint8_t EvType;
+        uint8_t Arg0;
+        uint16_t Arg1;
     } s;
 } EventStruct;
 
-class EventQueue {
+class EventQueue
+{
 public:
     EventQueue();
     bool IsEmpty(void);
-    
+
     int8_t Push(uint8_t t, uint8_t arg0, uint16_t arg1);
     int8_t Pop(EventStruct *ev);
-    
+
 private:
     uint8_t IdxIn;
     uint8_t IdxOut;
@@ -38,12 +41,13 @@ private:
     EventStruct Events[QUEUE_SIZE];
 };
 
-typedef enum EventId {
+typedef enum EventId
+{
     TIMER0_ELAPSED = 1
 } EventId;
 
 
-extern EventQueue  Queue;
+extern EventQueue Queue;
 
 #endif	/* EVENTQUEUE_H */
 

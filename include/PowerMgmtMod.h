@@ -8,7 +8,8 @@
 #ifndef POWERMGMTMOD_H
 #define	POWERMGMTMOD_H
 
-class PowerMgmtMod {
+class PowerMgmtMod
+{
 public:
     PowerMgmtMod();
     //PowerMgmtMod(const PowerMgmtMod& orig);

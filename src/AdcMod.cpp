@@ -18,8 +18,8 @@ AdcMod::AdcMod() {
 }
 
 #if 0
-ISR(ADC_vect)
-{
+
+ISR(ADC_vect) {
     uint16_t val = ADC;
 }
 #endif

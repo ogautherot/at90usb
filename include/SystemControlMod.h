@@ -11,24 +11,24 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-
-class SystemControlMod {
+class SystemControlMod
+{
 public:
     SystemControlMod();
     //SystemControlMod(const SystemControlMod& orig);
     //virtual ~SystemControlMod();
-    
+
     void SetDebugRegister(uint8_t d)
     {
         while (OCDR & 0x80);
         OCDR = d;
     }
-    
+
     uint8_t GetResetSource()
     {
         return MCUSR;
     }
-    
+
 private:
 
 };

@@ -26,14 +26,14 @@ UsbDeviceMod::UsbDeviceMod() {
     UECFG0X = 0;
     UECFG1X = 0;
     UEIENX = 0;
-    OTGTCON = 0;    // OTG Timer Config
-    
-    UHIEN = 0;  // If needed
+    OTGTCON = 0; // OTG Timer Config
+
+    UHIEN = 0; // If needed
     UHCON = 1;
     UPNUM = 0;
     UPCONX = 0;
     UPIENX = 0;
-    
+
     UPCFG0X = 0;
     UPCFG1X = 0;
     UPCFG2X = 0;
@@ -45,12 +45,10 @@ UsbDeviceMod::UsbDeviceMod() {
 //UsbDeviceMod::~UsbDeviceMod() {
 //}
 
-ISR(USB_GEN_vect)
-{
+ISR(USB_GEN_vect) {
     uint8_t UPINTX;
 }
 
-ISR(USB_COM_vect)
-{
-    
+ISR(USB_COM_vect) {
+
 }

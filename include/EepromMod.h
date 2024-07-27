@@ -20,11 +20,12 @@
 
 #define EEPROM_IS_BUSY  ((EECR & (1 << EEPE)) | (SPMCSR & SPMEN))
 
-class EepromMod {
+class EepromMod
+{
 public:
 
     EepromMod();
-    
+
     //EepromMod(const EepromMod& orig);
     //virtual ~EepromMod();
 
@@ -34,11 +35,13 @@ public:
     static int8_t ProcessBlock(uint16_t addr, uint8_t mode, int16_t size);
     static int8_t Step(void);
 
-    int8_t EraseByte(uint16_t addr) {
+    int8_t EraseByte(uint16_t addr)
+    {
         return ProcessBlock(addr, EEP_MODE_ERASE, 1);
     }
 
-    int8_t EraseBlock(uint16_t addr, uint16_t size) {
+    int8_t EraseBlock(uint16_t addr, uint16_t size)
+    {
         return ProcessBlock(addr, EEP_MODE_ERASE, size);
     }
 

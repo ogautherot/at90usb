@@ -13,16 +13,17 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-class ClockMod {
+class ClockMod
+{
 public:
     ClockMod();
     //ClockMod(const ClockMod& orig);
     //virtual ~ClockMod();
-    
+
     void Init(void);
     void StartPll(void);
-    
-    
+
+
 private:
 
 };

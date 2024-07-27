@@ -10,7 +10,7 @@
 ClockMod::ClockMod() {
     // Disable prescaler
     CLKPR = 0;
-    
+
     // Enable PLL
     PLLCSR = (6 << PLLP0) | (1 << PLLE);
 }

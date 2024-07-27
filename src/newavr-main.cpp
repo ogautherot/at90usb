@@ -11,13 +11,10 @@
 #include <avr/pgmspace.h>
 #include <avr/wdt.h>
 
+#include "lib.h"
 #include "EventQueue.h"
 #include "Lcd1602.h"
 
-extern "C"
-{
-    int main(void);
-}
 
 /* ************************ END OF DEFINITIONS ************************* */
 
@@ -30,76 +27,83 @@ extern "C"
 
 FUSES = {
     .low =
-        // FUSE_CKSEL2 & FUSE_CKSEL3 & // CKSEL[3:1] = 110 for 8MHz crystal (FUSE_CKSELn)
-        FUSE_CKSEL1 & // FUSE_CKSEL0 &
-        FUSE_SUT1 & FUSE_SUT0 &    // SUT = 10 for 14 cycles after reset (fastest)
-        FUSE_CKOUT, // &                // Allow CKOUT (FUSE_CKOUT)
-        //FUSE_CKDIV8,                // FUSE_CKDIV8 unprogrammed
-
+    // FUSE_CKSEL2 & FUSE_CKSEL3 & // CKSEL[3:1] = 110 for 8MHz crystal (FUSE_CKSELn)
+    FUSE_CKSEL1 & // FUSE_CKSEL0 &
+    FUSE_SUT1 & FUSE_SUT0 & // SUT = 10 for 14 cycles after reset (fastest)
+    FUSE_CKOUT & // Allow CKOUT (FUSE_CKOUT)
+    0xff,   // FUSE_CKDIV8, // FUSE_CKDIV8 unprogrammed
     .high =
-        // FUSE_BOOTRST &              // FUSE_BOOTRST: Move boot to upper flash
-        FUSE_BOOTSZ0 & FUSE_BOOTSZ1 & // 11: 512 words, 10: 1K, 01: 2K, 00: 4K
-        // 0xff &                   // FUSE_BOOTSZn: boot loader section size (128 words/page), 11 =
-        // FUSE_EESAVE &             // Preserve EEPROM upon flash erase
-        // FUSE_WDTON &              // enable interrupts
-        FUSE_SPIEN & FUSE_JTAGEN, // & FUSE_OCDEN, // Enable JTAG and SPI
-/*
-FUSES = {
-    .low =
-        FUSE_CKSEL2 & FUSE_CKSEL3 & // CKSEL[3:1] = 110 for 8MHz crystal (FUSE_CKSELn)
-        FUSE_SUT1 & FUSE_CKSEL0 &   // SUT = 10 for 14 cycles after reset (fastest)
-        FUSE_CKOUT,                 // &                // Allow CKOUT (FUSE_CKOUT)
-    // FUSE_CKDIV8,                // FUSE_CKDIV8 unprogrammed
-
-    .high =
-        // 0xff &                        // FUSE_BOOTRST: Move boot to upper flash
+    // FUSE_BOOTRST &              // FUSE_BOOTRST: Move boot to upper flash
     FUSE_BOOTSZ0 & FUSE_BOOTSZ1 & // 11: 512 words, 10: 1K, 01: 2K, 00: 4K
-    // 0xff &                   // FUSE_BOOTSZn: boot loader section size (128 words/page), 11 =
+    //                            // FUSE_BOOTSZn: boot loader section size (128 words/page), 11 =
     // FUSE_EESAVE &             // Preserve EEPROM upon flash erase
-    FUSE_WDTON &                           // enable interrupts
-    FUSE_SPIEN & FUSE_JTAGEN & FUSE_OCDEN, // Enable JTAG and SPI
-*/
+    //FUSE_WDTON &              // enable interrupts
+    FUSE_SPIEN & FUSE_JTAGEN, // & FUSE_OCDEN, // Enable JTAG and SPI
     .extended =
-        FUSE_BODLEVEL2 & // FUSE_BODLEVELn: 011 for 2.6V
-        FUSE_HWBE        // FUSE_HWBE: Hardware Boot Enable
+    FUSE_BODLEVEL2 & // FUSE_BODLEVELn: 011 for 2.6V
+    FUSE_HWBE // FUSE_HWBE: Hardware Boot Enable
 };
+// ==========================================================================
 
-uint8_t GetResetSource(void)
+
+uint16_t Time(void);
+uint16_t Time(void)
 {
+    uint16_t before, after;
+    
+    before = TCNT1;
+    sleep_us(10);
+    after = TCNT1;
+    after -= before;
+    return after;
+}
+
+uint8_t GetResetSource(void) {
     return MCUSR;
 }
 
 /** Clocks initialization. The external crystal is assumed to be 8MHz.
  */
-void ClockInit(void)
-{
+void ClockInit(void) {
     // Set CPU clock to the frequency of the crystal
     CLKPR = CLKPCE; // 0x80, to enable the reset of the CLKPS bits
     CLKPR = 0;
 
     // USB PLL
     PLLCSR = PLLP1 | PLLP0 | PLLE;
-    while (0 == (PLLCSR & PLOCK))
-    {
+    while (0 == (PLLCSR & PLOCK)) {
         // Do nothing
     }
+}
+
+void SetTimer1(void)
+{
+    TCCR1A = 0;
+    TCCR1B = 1;
+    TCCR1C = 0;
+    TIMSK1 = 0;
 }
 
 /** Board Support package - Ports directions
  *
  */
-void PortsInit(void)
-{
+void PortsInit(void) {
     PORTA = 0;
     DDRA = 0x03;
 }
 
 /** SysInit: Hardware initialization
  */
-void SysInit(void)
-{
-    Lcd1602Driver lcd;
+const char s1[] PROGMEM = "*Battery Tester*";
 
+void SysInit(void) {
+    Lcd1602Driver lcd;
+    volatile uint16_t duration;
+    const char s2[] = "world";
+ 
+    SetTimer1();
+    duration = Time();
+    
     set_sleep_mode(SLEEP_MODE_IDLE);
     sleep_enable();
 
@@ -107,34 +111,36 @@ void SysInit(void)
     PRR1 = (1 << PRUSART1);
 
     PortsInit();
-
     // ClockInit();
     lcd.Init();
+    lcd.SendConstStr(s1);
+    lcd.SendStr(s2, 5);
     //sei();
 }
 
-void SystemError(void)
-{
+void SystemError(void) {
     // Set ports to inputs, except LEDs
     DDRA |= 0x03;
-    while (1)
-    {
-        PORTA = 1;
-        PORTA = 2;
+    while (1) {
+        PORTA = (1 == (PORTA & 0x03)) ? 2 : 1;
+        sleep_us(0xffff);
     }
 }
 
 /** main
  * @return Returns 0, if at all...
  */
-int main(void)
-{
+int main(void) {
+    MCUSR = 0;
+    WDTCSR |= (1 << WDCE) | (1 << WDE);
+    /* Turn off WDT */
+    WDTCSR = 0x00;
     SysInit();
-    PORTA = 1;
-    DDRA = 1;
+    SystemError();
+    PORTA = 2;
+    DDRA = 3;
     /* Replace with your application code */
-    while (1)
-    {
+    while (1) {
         wdt_reset();
         /*
         EventStruct ev;

@@ -8,7 +8,8 @@
 #ifndef OCMMOD_H
 #define	OCMMOD_H
 
-class OcmMod {
+class OcmMod
+{
 public:
     OcmMod();
     //OcmMod(const OcmMod& orig);

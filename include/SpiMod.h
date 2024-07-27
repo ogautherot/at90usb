@@ -11,8 +11,8 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-
-class SpiMod {
+class SpiMod
+{
 public:
     SpiMod();
     //SpiMod(const SpiMod& orig);

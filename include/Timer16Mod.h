@@ -24,8 +24,8 @@
 
 #include <string.h>
 
-
-class Timer16Mod {
+class Timer16Mod
+{
 public:
     Timer16Mod();
     //Timer16Mod(const Timer16Mod& orig);
@@ -39,28 +39,33 @@ public:
                 (idx == 3) ? ICR3 :
                 0;
     }
-    
+
     void SetOutputCompare(uint8_t timer, uint8_t oc, uint16_t val)
     {
         if (timer == 1) {
-            if (oc == 1)    {
+            if (oc == 1) {
                 OCR1A = val;
-            } else if (oc == 2)    {
+            }
+            else if (oc == 2) {
                 OCR1B = val;
-            } else if (oc == 3)    {
+            }
+            else if (oc == 3) {
                 OCR1C = val;
             }
-        } else if (timer == 3)  {
-            if (oc == 1)    {
+        }
+        else if (timer == 3) {
+            if (oc == 1) {
                 OCR3A = val;
-            } else if (oc == 2)    {
+            }
+            else if (oc == 2) {
                 OCR3B = val;
-            } else if (oc == 3)    {
+            }
+            else if (oc == 3) {
                 OCR3C = val;
             }
         }
     }
-    
+
 private:
 
 };

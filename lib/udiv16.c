@@ -14,22 +14,23 @@
 //    return v << 2;
 //}
 
-uint16_t udiv(uint16_t up, uint16_t divisor)
-{
+uint16_t udiv(uint16_t up, uint16_t divisor) {
+
     union {
         uint32_t v;
+
         struct {
             uint16_t lower;
             uint16_t upper;
         };
-    } mant = { up };
+    } mant = {up};
     uint8_t counter = 16;
     uint16_t res = 0;
 
     while (counter > 0) {
         mant.v <<= 1;
         res <<= 1;
-        if (mant.upper > divisor)     {
+        if (mant.upper > divisor) {
             mant.upper -= divisor;
             res |= 1;
         }

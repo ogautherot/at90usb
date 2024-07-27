@@ -18,18 +18,15 @@ UsartMod::UsartMod() {
 //UsartMod::~UsartMod() {
 //}
 
-ISR(USART1_RX_vect)
-{
-    
+ISR(USART1_RX_vect) {
+
 }
 
-ISR(USART1_UDRE_vect)
-{
-    
+ISR(USART1_UDRE_vect) {
+
 }
 
-ISR(USART1_TX_vect)
-{
-    
+ISR(USART1_TX_vect) {
+
 }
 

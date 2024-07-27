@@ -11,7 +11,7 @@ SystemControlMod::SystemControlMod() {
     // Force prescaler to 0
     CLKPR = 0x80;
     CLKPR = 0;
-    
+
     // Power Reduction Register 0
     PRR0 = 0
             | (1 << PRTWI)
@@ -21,17 +21,17 @@ SystemControlMod::SystemControlMod() {
             | (1 << PRSPI)
             | (1 << PRADC)
             ;
-    
+
     PRR1 = 0
             | (1 << PRUSB)
             | (1 << PRTIM3)
             | (1 << PRUSART1)
             ;
-    
+
     // External memory control
     XMCRA = 0;
     XMCRB = 0;
-    
+
     SMCR = (0 << 1) | SE;
 }
 

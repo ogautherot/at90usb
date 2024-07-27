@@ -24,39 +24,42 @@
 #include <string.h>
 #include <stdint.h>
 
-
-class Timer8Mod {
+class Timer8Mod
+{
 public:
     Timer8Mod();
     //Timer8Mod(const Timer8Mod& orig);
     //virtual ~Timer8Mod();
 
-    int8_t      SetTimer(uint8_t t, uint8_t arg0);
+    int8_t SetTimer(uint8_t t, uint8_t arg0);
 
     void SetOutputCompare(uint8_t timer, uint8_t oc, uint8_t val)
     {
         if (timer == 0) {
-            if (oc == 1)    {
+            if (oc == 1) {
                 OCR0A = val;
-            } else if (oc == 2)    {
+            }
+            else if (oc == 2) {
                 OCR0B = val;
             }
-        } else if (timer == 2)  {
-            if (oc == 1)    {
+        }
+        else if (timer == 2) {
+            if (oc == 1) {
                 OCR2A = val;
-            } else if (oc == 2)    {
+            }
+            else if (oc == 2) {
                 OCR2B = val;
             }
         }
     }
-    
+
     uint8_t GetASSR()
     {
         return ASSR;
     }
 
 private:
-    uint8_t     EventArg0;
+    uint8_t EventArg0;
 };
 
 #endif	/* TIMER8MOD_H */

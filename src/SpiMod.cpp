@@ -20,7 +20,6 @@ SpiMod::SpiMod() {
 //SpiMod::~SpiMod() {
 //}
 
-ISR(SPI_STC_vect)
-{
-    
+ISR(SPI_STC_vect) {
+
 }

@@ -6,8 +6,8 @@
  */
 
 /*
-  * Not in use
-  * */
+ * Not in use
+ * */
 
 #ifndef ANALOGCOMPMOD_H
 #define	ANALOGCOMPMOD_H
@@ -15,11 +15,11 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-
-class AnalogCompMod {
+class AnalogCompMod
+{
 public:
     AnalogCompMod();
-    
+
     //AnalogCompMod(const AnalogCompMod& orig);
     //virtual ~AnalogCompMod();
 private:

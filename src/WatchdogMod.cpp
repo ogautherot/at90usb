@@ -13,9 +13,7 @@
 // WatchdogMod::~WatchdogMod() {
 // }
 
-ISR(WDT_vect)
-{
-    while (1)
-    {
+ISR(WDT_vect) {
+    while (1) {
     }
 }
