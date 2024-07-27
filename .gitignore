@@ -5,3 +5,7 @@
 backup/
 nbproject/
 /dist/
+*.log
+*.inx
+disassembly
+queuelogs
