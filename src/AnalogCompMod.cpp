@@ -29,9 +29,8 @@ AnalogCompMod::AnalogCompMod() {
 
 //AnalogCompMod::~AnalogCompMod() { }
 
-#if 0
 
 ISR(ANALOG_COMP_vect) {
-
+    ACSR |= 0x10;
 }
-#endif
+

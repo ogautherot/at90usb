@@ -31,73 +31,53 @@ Timer16Mod::Timer16Mod() {
 //}
 
 
-#if 0
 
 ISR(TIMER1_CAPT_vect) {
-
+    while (1);
 }
-#endif
 
-#if 0
 
 ISR(TIMER1_COMPA_vect) {
-
+    while (1);
 }
-#endif
 
-#if 0
 
 ISR(TIMER1_COMPB_vect) {
-
+    while (1);
 }
-#endif
 
-#if 0
 
 ISR(TIMER1_COMPC_vect) {
-
+    while (1);
 }
-#endif
 
-#if 0
 
 ISR(TIMER1_OVF_vect) {
-
+    while (1);
 }
-#endif
 
-#if 0
 
 ISR(TIMER3_CAPT_vect) {
-
+    while (1);
 }
-#endif
 
-#if 0
 
 ISR(TIMER3_COMPA_vect) {
-
+    while (1);
 }
-#endif
 
-#if 0
 
 ISR(TIMER3_COMPB_vect) {
-
+    while (1);
 }
-#endif
 
-#if 0
 
 ISR(TIMER3_COMPC_vect) {
-
+    while (1);
 }
-#endif
 
-#if 0
 
 ISR(TIMER3_OVF_vect) {
-
+    while (1);
 }
-#endif
 

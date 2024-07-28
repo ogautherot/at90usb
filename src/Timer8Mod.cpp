@@ -57,47 +57,34 @@ int8_t Timer8Mod::SetTimer(uint8_t t, uint8_t arg0) {
     return ret;
 }
 
-#if 0
 
 ISR(TIMER0_COMPA_vect) {
-    TCCR0B = 0; // Stop counting
-    TIFR0 = 0x02; // Optional - OCF0A
+    //TCCR0B = 0; // Stop counting
+    //TIFR0 = 0x02; // Optional - OCF0A
     Queue.Push(TIMER0_ELAPSED, 0, 0);
 }
-#endif
 
-#if 0
 
 ISR(TIMER0_COMPB_vect) {
-
+    TIFR0 = 0x04;
 }
-#endif
 
-#if 0
 
 ISR(TIMER0_OVF_vect) {
-
+    TIFR0 = 0x01;
 }
-#endif
 
-#if 0
 
 ISR(TIMER2_COMPA_vect) {
-
+    TIFR2 = 0x02;
 }
-#endif
 
-#if 0
 
 ISR(TIMER2_COMPB_vect) {
-
+    TIFR2 = 0x04;
 }
-#endif
-
-#if 0
 
 ISR(TIMER2_OVF_vect) {
-
+    TIFR2 = 0x01;
 }
-#endif
 

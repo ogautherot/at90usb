@@ -17,9 +17,8 @@ AdcMod::AdcMod() {
     DIDR1 = 0x00;
 }
 
-#if 0
 
 ISR(ADC_vect) {
+    // Interrupt flag disabled automatically
     uint16_t val = ADC;
 }
-#endif

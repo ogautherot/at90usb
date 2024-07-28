@@ -76,8 +76,20 @@ void ClockInit(void) {
     }
 }
 
+void SetTimer0(void)
+{
+    // System tick
+    TCNT0 = 0;
+    TCCR0A = 0x02;
+    TCCR0B = 0x03;  // Prescaler x64
+    OCR0A = 124;    // 1ms interrupt
+    OCR0B = 0;
+    TIMSK0 = 0x02;
+}
+
 void SetTimer1(void)
 {
+    // Fast timer for performance measurement
     TCCR1A = 0;
     TCCR1B = 1;
     TCCR1C = 0;
@@ -94,12 +106,12 @@ void PortsInit(void) {
 
 /** SysInit: Hardware initialization
  */
-const char s1[] PROGMEM = "*Battery Tester*";
+const char LcdTitle[] PROGMEM = ">Battery Tester<";
+const char LcdNoLoad[] PROGMEM = "  Load missing  ";
 
 void SysInit(void) {
     Lcd1602Driver lcd;
     volatile uint16_t duration;
-    const char s2[] = "world";
  
     SetTimer1();
     duration = Time();
@@ -113,9 +125,11 @@ void SysInit(void) {
     PortsInit();
     // ClockInit();
     lcd.Init();
-    lcd.SendConstStr(s1);
-    lcd.SendStr(s2, 5);
-    //sei();
+    lcd.SendConstStr(LcdTitle);
+    lcd.SetAddress(0, 0x40);
+    lcd.SendConstStr(LcdNoLoad);
+    SetTimer0();
+    sei();
 }
 
 void SystemError(void) {
@@ -136,21 +150,19 @@ int main(void) {
     /* Turn off WDT */
     WDTCSR = 0x00;
     SysInit();
-    SystemError();
+    //SystemError();
     PORTA = 2;
     DDRA = 3;
     /* Replace with your application code */
     while (1) {
-        wdt_reset();
-        /*
         EventStruct ev;
 
+        wdt_reset();
         while (!Queue.IsEmpty())
         {
             Queue.Pop(&ev);
         }
-        //sleep_cpu();
-         * */
+        sleep_cpu();
     }
     return 0;
 }

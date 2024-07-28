@@ -45,58 +45,46 @@ GpioMod::GpioMod() {
 //}
 
 
-#if 0
-
 ISR(INT0_vect) {
     EIFR = INTF0;
 }
-#endif
 
-#if 0
 
 ISR(INT1_vect) {
     EIFR = INTF1;
 }
-#endif
 
-#if 0
 
 ISR(INT2_vect) {
     EIFR = INTF2;
 }
-#endif
 
-#if 0
 
 ISR(INT3_vect) {
     EIFR = INTF3;
 }
-#endif
 
-#if 0
 
 ISR(INT4_vect) {
     EIFR = INTF4;
 }
-#endif
 
-#if 0
 
 ISR(INT5_vect) {
     EIFR = INTF5;
 }
-#endif
 
-#if 0
 
 ISR(INT6_vect) {
     EIFR = INTF6;
 }
-#endif
 
-#if 0
 
 ISR(INT7_vect) {
     EIFR = INTF7;
 }
-#endif
+
+ISR(PCINT0_vect)    {
+    PCIFR = 1;
+}
+

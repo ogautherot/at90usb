@@ -46,9 +46,20 @@ UsbDeviceMod::UsbDeviceMod() {
 //}
 
 ISR(USB_GEN_vect) {
-    uint8_t UPINTX;
+    // USB general
+    OTGINT = 0x3f;
+    USBINT = 0x03;
+    
+    // USB device
+    UDINT = 0x7d;
+    // ??? UEINT = 0xff;
+    
+    // Host register
+    UHINT = 0x7f;
+    
 }
 
 ISR(USB_COM_vect) {
-
+    UPIENX = 0xdf;
+    UEINTX = 0xff;
 }

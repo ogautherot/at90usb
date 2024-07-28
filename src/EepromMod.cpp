@@ -77,6 +77,6 @@ int8_t EepromMod::Step(void) {
 }
 
 ISR(EE_READY_vect) {
-
+    // EEPROM interrupt flag cleared automatically
 }
 

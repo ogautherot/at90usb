@@ -21,5 +21,6 @@ SpiMod::SpiMod() {
 //}
 
 ISR(SPI_STC_vect) {
-
+    (void) SPSR;
+    (void) SPDR;
 }

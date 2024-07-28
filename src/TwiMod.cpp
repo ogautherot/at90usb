@@ -22,5 +22,5 @@ TwiMod::TwiMod() {
 //}
 
 ISR(TWI_vect) {
-
+    TWCR |= 0x80;
 }

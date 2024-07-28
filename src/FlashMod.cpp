@@ -11,7 +11,8 @@ FlashMod::FlashMod() {
     SPMCSR = 0;
 }
 
+// SPM instruction
 ISR(SPM_READY_vect) {
-
+    
 }
 

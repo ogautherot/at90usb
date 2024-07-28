@@ -19,14 +19,14 @@ UsartMod::UsartMod() {
 //}
 
 ISR(USART1_RX_vect) {
-
+    while (1);
 }
 
 ISR(USART1_UDRE_vect) {
-
+    while (1);
 }
 
 ISR(USART1_TX_vect) {
-
+    while (1);
 }
 
