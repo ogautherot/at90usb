@@ -79,24 +79,24 @@ public:
         SendCmd(cmd);
     }
 
-    void SendChar(uint8_t c);
+    static void SendChar(uint8_t c);
 
-    void SendSingleCmd(uint8_t pattern);
+    static void SendSingleCmd(uint8_t pattern);
 
-    void SendCmd(uint8_t pattern);
+    static void SendCmd(uint8_t pattern);
 
     void Init(void);
     
-    void SendStr(const char *s, uint8_t len);
+    static void SendStr(const char *s, uint8_t len);
 
-    void SendStr(const char *s);
+    static void SendStr(const char *s);
 
-    void SendConstStr(const char *s, uint8_t len);
+    static void SendConstStr(const char *s, uint8_t len);
 
-    void SendConstStr(const char *s);
+    static void SendConstStr(const char *s);
 
 private:
-    void SetBusWidth(uint8_t width);
+    static void SetBusWidth(uint8_t width);
 };
 
 #endif // __LCD_1602_H__

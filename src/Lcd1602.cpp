@@ -174,7 +174,7 @@ void Lcd1602Driver::Init(void) {
     LCD1602_CTRL_PORT = 0;
     LCD1602_CTRL_DIR = 0x7f;
 
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < 10; i++)
         sleep_us(10000);
     SetDataDir(0);
 
@@ -183,9 +183,11 @@ void Lcd1602Driver::Init(void) {
     SetBusWidth(8);
     SetBusWidth(8);
     SetBusWidth(4);
-    FunctionSet(0, 1, 0);
+    FunctionSet(0, 1, 1);
+    sleep_us(100);
 
     DisplayOn(1, 1, 1);
     ClearDisplay();
+    ReturnHome();
     EntryMode(1, 0);
 }
