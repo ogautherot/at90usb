@@ -13,6 +13,10 @@
 // WatchdogMod::~WatchdogMod() {
 // }
 
-ISR(WDT_vect) {
+ISR(WDT_vect)
+{
+    while (1)
+        ;
+
     WDTCSR = 0x80;
 }

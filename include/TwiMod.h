@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   TwiMod.h
  * Author: olivier
  *
@@ -6,17 +6,18 @@
  */
 
 #ifndef TWIMOD_H
-#define	TWIMOD_H
+#define TWIMOD_H
 
-#include <avr/io.h>
+#include "PowerMeter.h"
+
 #include <avr/interrupt.h>
+#include <avr/io.h>
 
-class TwiMod
-{
+class TwiMod {
 public:
     TwiMod();
-    //TwiMod(const TwiMod& orig);
-    //virtual ~TwiMod();
+    // TwiMod(const TwiMod& orig);
+    // virtual ~TwiMod();
 
     uint8_t GetStatus()
     {
@@ -28,10 +29,7 @@ public:
         return TWDR;
     }
 
-
 private:
-
 };
 
-#endif	/* TWIMOD_H */
-
+#endif /* TWIMOD_H */

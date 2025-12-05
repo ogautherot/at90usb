@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   GpioMod.h
  * Author: olivier
  *
@@ -6,32 +6,50 @@
  */
 
 #ifndef GPIOMOD_H
-#define	GPIOMOD_H
+#define GPIOMOD_H
 
-#include <avr/io.h>
+/** @brief GPIO driver module.
+ *
+ *
+ */
+
+#include "PowerMeter.h"
+
 #include <avr/interrupt.h>
+#include <avr/io.h>
 
-class GpioMod
-{
+#define LED_SINK_MASK (1 << 0)
+#define LED_CHARGING_MASK (1 << 1)
+#define CTRL_SINK_MASK (1 << 2)
+#define CTRL_SHUNT_LOAD_MASK (1 << 3)
+#define CTRL_EXT_LOAD_MASK (1 << 4)
+
+class GpioMod {
 public:
     GpioMod();
-    //GpioMod(const GpioMod& orig);
-    //virtual ~GpioMod();
+    // GpioMod(const GpioMod& orig);
+    // virtual ~GpioMod();
 
     void TogglePin(uint8_t port, uint8_t pin)
     {
         switch (port) {
-        case 0: PINA = (1 << pin);
+        case 0:
+            PINA = (1 << pin);
             break;
-        case 1: PINB = (1 << pin);
+        case 1:
+            PINB = (1 << pin);
             break;
-        case 2: PINC = (1 << pin);
+        case 2:
+            PINC = (1 << pin);
             break;
-        case 3: PIND = (1 << pin);
+        case 3:
+            PIND = (1 << pin);
             break;
-        case 4: PINE = (1 << pin);
+        case 4:
+            PINE = (1 << pin);
             break;
-        case 5: PINF = (1 << pin);
+        case 5:
+            PINF = (1 << pin);
             break;
         }
     }
@@ -39,17 +57,23 @@ public:
     void SetPin(uint8_t port, uint8_t pin)
     {
         switch (port) {
-        case 0: PORTA |= (1 << pin);
+        case 0:
+            PORTA |= (1 << pin);
             break;
-        case 1: PORTB |= (1 << pin);
+        case 1:
+            PORTB |= (1 << pin);
             break;
-        case 2: PORTC |= (1 << pin);
+        case 2:
+            PORTC |= (1 << pin);
             break;
-        case 3: PORTD |= (1 << pin);
+        case 3:
+            PORTD |= (1 << pin);
             break;
-        case 4: PORTE |= (1 << pin);
+        case 4:
+            PORTE |= (1 << pin);
             break;
-        case 5: PORTF |= (1 << pin);
+        case 5:
+            PORTF |= (1 << pin);
             break;
         }
     }
@@ -92,8 +116,7 @@ public:
         case 0:
             if (val) {
                 PORTA |= (1 << pin);
-            }
-            else {
+            } else {
                 PORTA &= ~(1 << pin);
             }
             DDRA |= (1 << pin);
@@ -101,8 +124,7 @@ public:
         case 1:
             if (val) {
                 PORTB &= ~(1 << pin);
-            }
-            else {
+            } else {
                 PORTB &= ~(1 << pin);
             }
             DDRB &= ~(1 << pin);
@@ -110,8 +132,7 @@ public:
         case 2:
             if (val) {
                 PORTC &= ~(1 << pin);
-            }
-            else {
+            } else {
                 PORTC &= ~(1 << pin);
             }
             DDRC &= ~(1 << pin);
@@ -119,8 +140,7 @@ public:
         case 3:
             if (val) {
                 PORTD &= ~(1 << pin);
-            }
-            else {
+            } else {
                 PORTD &= ~(1 << pin);
             }
             DDRD &= ~(1 << pin);
@@ -128,8 +148,7 @@ public:
         case 4:
             if (val) {
                 PORTE &= ~(1 << pin);
-            }
-            else {
+            } else {
                 PORTE &= ~(1 << pin);
             }
             DDRE &= ~(1 << pin);
@@ -137,8 +156,7 @@ public:
         case 5:
             if (val) {
                 PORTF &= ~(1 << pin);
-            }
-            else {
+            } else {
                 PORTF &= ~(1 << pin);
             }
             DDRF &= ~(1 << pin);
@@ -146,10 +164,65 @@ public:
         }
     }
 
+    void SetLedSink(void)
+    {
+        PORTA |= LED_SINK_MASK;
+    }
+
+    void ClearLedSink(void)
+    {
+        PORTA &= ~LED_SINK_MASK;
+    }
+
+    void SetLedCharging(void)
+    {
+        PORTA |= LED_CHARGING_MASK;
+    }
+
+    void ClearLedCharging(void)
+    {
+        PORTA &= ~LED_CHARGING_MASK;
+    }
+
+    void SetControlSink(void)
+    {
+        PORTA |= CTRL_SINK_MASK;
+    }
+
+    void ClearControlSink(void)
+    {
+        PORTA &= ~CTRL_SINK_MASK;
+    }
+
+    void SetControlShuntLoad(void)
+    {
+        PORTA |= CTRL_SHUNT_LOAD_MASK;
+    }
+
+    void ClearControlShuntLoad(void)
+    {
+        PORTA &= ~CTRL_SHUNT_LOAD_MASK;
+    }
+
+    void SetControlExtLoad(void)
+    {
+        PORTA |= CTRL_EXT_LOAD_MASK;
+    }
+
+    void ClearControlExtLoad(void)
+    {
+        PORTA &= ~CTRL_EXT_LOAD_MASK;
+    }
+
+    uint8_t
+    GetKeyMask(void)
+    {
+        return (PORTB >> 4);
+    }
 
 private:
-
 };
 
-#endif	/* GPIOMOD_H */
+extern GpioMod gpio;
 
+#endif /* GPIOMOD_H */

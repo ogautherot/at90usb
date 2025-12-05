@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   FlashMod.h
  * Author: olivier
  *
@@ -6,7 +6,9 @@
  */
 
 #ifndef FLASHMOD_H
-#define	FLASHMOD_H
+#define FLASHMOD_H
+
+#include "PowerMeter.h"
 
 #include <avr/io.h>
 
@@ -15,15 +17,14 @@
 
 using namespace std;
 
-#include <avr/io.h>
 #include <avr/interrupt.h>
+#include <avr/io.h>
 
-class FlashMod
-{
+class FlashMod {
 public:
     FlashMod();
     // FlashMod(const FlashMod& orig);
-    // virtual ~FlashMod();    
+    // virtual ~FlashMod();
 
     uint32_t GetSignature()
     {
@@ -33,9 +34,6 @@ public:
     // @TODO Implement page write and page erase
 
 private:
-
-
 };
 
-#endif	/* FLASHMOD_H */
-
+#endif /* FLASHMOD_H */

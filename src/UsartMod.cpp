@@ -1,32 +1,38 @@
-/* 
+/*
  * File:   UsartMod.cpp
  * Author: olivier
- * 
+ *
  * Created on May 1, 2024, 10:38 PM
  */
 
 #include "UsartMod.h"
 
-UsartMod::UsartMod() {
+UsartMod::UsartMod()
+{
     UBRR1 = 0;
     UCSR1C = 0;
 }
 
-//UsartMod::UsartMod(const UsartMod& orig) {
-//}
+// UsartMod::UsartMod(const UsartMod& orig) {
+// }
 
-//UsartMod::~UsartMod() {
-//}
+// UsartMod::~UsartMod() {
+// }
 
-ISR(USART1_RX_vect) {
-    while (1);
+ISR(USART1_RX_vect)
+{
+    while (1)
+        ;
 }
 
-ISR(USART1_UDRE_vect) {
-    while (1);
+ISR(USART1_UDRE_vect)
+{
+    while (1)
+        ;
 }
 
-ISR(USART1_TX_vect) {
-    while (1);
+ISR(USART1_TX_vect)
+{
+    while (1)
+        ;
 }
-

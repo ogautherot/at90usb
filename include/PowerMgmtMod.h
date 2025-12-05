@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   PowerMgmtMod.h
  * Author: olivier
  *
@@ -6,17 +6,14 @@
  */
 
 #ifndef POWERMGMTMOD_H
-#define	POWERMGMTMOD_H
+#define POWERMGMTMOD_H
 
-class PowerMgmtMod
-{
+class PowerMgmtMod {
 public:
     PowerMgmtMod();
-    //PowerMgmtMod(const PowerMgmtMod& orig);
-    //virtual ~PowerMgmtMod();
+    // PowerMgmtMod(const PowerMgmtMod& orig);
+    // virtual ~PowerMgmtMod();
 private:
-
 };
 
-#endif	/* POWERMGMTMOD_H */
-
+#endif /* POWERMGMTMOD_H */

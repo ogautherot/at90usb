@@ -6,10 +6,12 @@
 #ifndef __LCD_1602_H__
 #define __LCD_1602_H__
 
-#include <stdint.h>
-#include <avr/io.h>
+#include "PowerMeter.h"
+
 #include <avr/cpufunc.h>
-#include <avr/pgmspace.h> 
+#include <avr/io.h>
+#include <avr/pgmspace.h>
+#include <stdint.h>
 
 // Board-level definitions
 #define LCD1602_CTRL_PORT PORTC
@@ -19,17 +21,18 @@
 #define LCD1602_E_MASK 0x10
 
 #define LCD1602_DATA_PORT PORTC
-#define LCD1602_DATA_IN   PINC
-#define LCD1602_DATA_DIR  DDRC
+#define LCD1602_DATA_IN PINC
+#define LCD1602_DATA_DIR DDRC
 #define LCD1602_DATA_MASK 0x0f
 #define LCD1602_DATA_GET_D7 (PORTA & 0x80)
 
+#define LCD_LINE1 0x00
+#define LCD_LINE2 0x40
+
 /** LCD driver class, for the typical 16x02 displays
  */
-class Lcd1602Driver
-{
+class Lcd1602Driver {
 public:
-
     Lcd1602Driver()
     {
     }
@@ -86,17 +89,19 @@ public:
     static void SendCmd(uint8_t pattern);
 
     void Init(void);
-    
-    static void SendStr(const char *s, uint8_t len);
 
-    static void SendStr(const char *s);
+    static void SendStr(const char* s, uint8_t len);
 
-    static void SendConstStr(const char *s, uint8_t len);
+    static void SendStr(const char* s);
 
-    static void SendConstStr(const char *s);
+    static void SendConstStr(const char* s, uint8_t len);
+
+    static void SendConstStr(const char* s);
 
 private:
     static void SetBusWidth(uint8_t width);
 };
+
+extern Lcd1602Driver lcd;
 
 #endif // __LCD_1602_H__

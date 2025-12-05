@@ -8,14 +8,14 @@
 #ifndef WATCHDOGMOD_H
 #define WATCHDOGMOD_H
 
-#include <avr/io.h>
+#include "PowerMeter.h"
+
 #include <avr/interrupt.h>
+#include <avr/io.h>
 #include <avr/wdt.h>
 
-class WatchdogMod
-{
+class WatchdogMod {
 public:
-
     WatchdogMod()
     {
     }

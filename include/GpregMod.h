@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   GpregMod.h
  * Author: olivier
  *
@@ -6,42 +6,42 @@
  */
 
 #ifndef GPREGMOD_H
-#define	GPREGMOD_H
+#define GPREGMOD_H
 
 #include <stdint.h>
 #include <string.h>
 
+#include "PowerMeter.h"
+
 #include <avr/io.h>
 
-class GpregMod
-{
+class GpregMod {
 public:
-
     static void SetReg(uint8_t idx, uint8_t val)
     {
         switch (idx) {
-        case 0: GPIOR0 = val;
+        case 0:
+            GPIOR0 = val;
             break;
-        case 1: GPIOR1 = val;
+        case 1:
+            GPIOR1 = val;
             break;
-        case 2: GPIOR2 = val;
+        case 2:
+            GPIOR2 = val;
             break;
         }
     }
 
     static uint8_t GetReg(uint8_t idx)
     {
-        return (idx == 0) ? GPIOR0 :
-                (idx == 1) ? GPIOR1 :
-                (idx == 2) ? GPIOR2 :
-                0;
+        return (idx == 0) ? GPIOR0 : (idx == 1) ? GPIOR1
+            : (idx == 2)                        ? GPIOR2
+                                                : 0;
     }
 
 private:
-
 };
 
-#define Gpreg   ((GpregMod *) NULL)
+#define Gpreg ((GpregMod*)NULL)
 
-#endif	/* GPREGMOD_H */
-
+#endif /* GPREGMOD_H */

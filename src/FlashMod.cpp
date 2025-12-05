@@ -1,18 +1,20 @@
-/* 
+/*
  * File:   FlashMod.cpp
  * Author: olivier
- * 
+ *
  * Created on May 1, 2024, 10:18 PM
  */
 
 #include "FlashMod.h"
 
-FlashMod::FlashMod() {
+FlashMod::FlashMod()
+{
     SPMCSR = 0;
 }
 
 // SPM instruction
-ISR(SPM_READY_vect) {
-    
+ISR(SPM_READY_vect)
+{
+    while (1)
+        ;
 }
-

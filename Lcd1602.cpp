@@ -20,15 +20,15 @@
 Lcd1602Driver lcd;
 
 /* ************************************************************************ */
-// #pragma GCC push_options
-// #pragma GCC optimize("Os")
+#pragma GCC push_options
+#pragma GCC optimize("Os")
 
 static uint8_t SampleBus(void)
 {
     uint8_t ret;
 
     // SetDataDir(1);
-    LCD_DATA_IN;
+    LCD1602_DATA_IN;
     LCD_SET_E; // SetE(1);
     _NOP();
     ret = LCD1602_DATA_IN;
@@ -86,7 +86,7 @@ static void PokeBus(uint8_t d)
     LCD_CLR_E; // SetE(0);
 }
 
-// #pragma GCC pop_options
+#pragma GCC pop_options
 
 /* ************************************************************************ */
 
@@ -102,21 +102,9 @@ uint16_t WaitForBusy(void)
     return count;
 }
 
-void SendTrx(uint8_t pattern, uint8_t doubletrx, uint8_t isData)
+#if 0
+void SendTrx(uint8_t pattern, uint8_t doubletrx)
 {
-    WaitForBusy();
-    if (isData)
-    {
-        // SetLcdControlBus(1, 0);
-        LCD_SET_RS;
-        LCD_CLR_RW;
-    }
-    else
-    {
-        // SetLcdControlBus(0, 0);
-        LCD_CLR_RS;
-        LCD_CLR_RW;
-    }
     PokeBus(pattern >> 4);
 
     if (doubletrx)
@@ -124,20 +112,35 @@ void SendTrx(uint8_t pattern, uint8_t doubletrx, uint8_t isData)
         PokeBus(pattern & 0x0f);
     }
 }
+#endif
 
 void Lcd1602Driver::SendChar(uint8_t c)
 {
-    SendTrx(c, 1, 1);
+    WaitForBusy();
+    LCD_SET_RS;
+    LCD_CLR_RW;
+    // SendTrx(c, 1);
+    PokeBus(c >> 4);
+    PokeBus(c & 0xf);
 }
 
 void Lcd1602Driver::SendSingleCmd(uint8_t pattern)
 {
-    SendTrx(pattern, 0, 0);
+    WaitForBusy();
+    LCD_CLR_RS;
+    LCD_CLR_RW;
+    // SendTrx(pattern, 0);
+    PokeBus(pattern >> 4);
+    PokeBus(pattern & 0xf);
 }
 
 void Lcd1602Driver::SendCmd(uint8_t pattern)
 {
-    SendTrx(pattern, 1, 0);
+    WaitForBusy();
+    LCD_CLR_RS;
+    LCD_CLR_RW;
+    // SendTrx(pattern, 1);
+    PokeBus(pattern >> 4);
 }
 
 void Lcd1602Driver::SetBusWidth(uint8_t width)

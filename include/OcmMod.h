@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   OcmMod.h
  * Author: olivier
  *
@@ -6,17 +6,14 @@
  */
 
 #ifndef OCMMOD_H
-#define	OCMMOD_H
+#define OCMMOD_H
 
-class OcmMod
-{
+class OcmMod {
 public:
     OcmMod();
-    //OcmMod(const OcmMod& orig);
-    //virtual ~OcmMod();
+    // OcmMod(const OcmMod& orig);
+    // virtual ~OcmMod();
 private:
-
 };
 
-#endif	/* OCMMOD_H */
-
+#endif /* OCMMOD_H */

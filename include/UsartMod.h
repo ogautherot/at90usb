@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   UsartMod.h
  * Author: olivier
  *
@@ -6,17 +6,18 @@
  */
 
 #ifndef USARTMOD_H
-#define	USARTMOD_H
+#define USARTMOD_H
 
-#include <avr/io.h>
+#include "PowerMeter.h"
+
 #include <avr/interrupt.h>
+#include <avr/io.h>
 
-class UsartMod
-{
+class UsartMod {
 public:
     UsartMod();
-    //UsartMod(const UsartMod& orig);
-    //virtual ~UsartMod();
+    // UsartMod(const UsartMod& orig);
+    // virtual ~UsartMod();
 
     uint8_t GetStatusA()
     {
@@ -39,8 +40,6 @@ public:
     }
 
 private:
-
 };
 
-#endif	/* USARTMOD_H */
-
+#endif /* USARTMOD_H */

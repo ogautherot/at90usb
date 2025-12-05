@@ -58,9 +58,48 @@ public:
         return ASSR;
     }
 
+    void StartTimer0(void)
+    {
+        uint8_t tccr = TCCR0B;
+        
+        if (0 == (tccr & ((1 << CS00) | (1 << CS01) | (1 << CS02))))  {
+            TCNT0 = 0;
+            TCCR0B = tccr | (1 << CS01);
+        }
+    }
+    
+    void StopTimer0(void)
+    {
+        TCCR0B &= ((1 << CS02) | (1 << CS01) | (1 << CS00));
+    }
+    
+    void StartTimer2(void)
+    {
+        uint8_t tccr = TCCR2B & ~((1 << CS20) | (1 << CS21) | (1 << CS22));
+        
+        TCCR2B = tccr | (1 << CS21);
+    }
+    
+    void StopTimer2(void)
+    {
+        TCCR2B &= ~((1 << CS20) | (1 << CS21) | (1 << CS22));
+    }
+    
+    void    StartSysTick(void)
+    {
+        StartTimer2();
+    }
+    
+    void    StopSysTick(void)
+    {
+        StopTimer2();
+    }
+    
 private:
     uint8_t EventArg0;
 };
+
+extern Timer8Mod timer02;
 
 #endif	/* TIMER8MOD_H */
 

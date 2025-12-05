@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   SystemControlMod.h
  * Author: olivier
  *
@@ -6,21 +6,23 @@
  */
 
 #ifndef SYSTEMCONTROLMOD_H
-#define	SYSTEMCONTROLMOD_H
+#define SYSTEMCONTROLMOD_H
 
-#include <avr/io.h>
+#include "PowerMeter.h"
+
 #include <avr/interrupt.h>
+#include <avr/io.h>
 
-class SystemControlMod
-{
+class SystemControlMod {
 public:
     SystemControlMod();
-    //SystemControlMod(const SystemControlMod& orig);
-    //virtual ~SystemControlMod();
+    // SystemControlMod(const SystemControlMod& orig);
+    // virtual ~SystemControlMod();
 
     void SetDebugRegister(uint8_t d)
     {
-        while (OCDR & 0x80);
+        while (OCDR & 0x80)
+            ;
         OCDR = d;
     }
 
@@ -30,8 +32,6 @@ public:
     }
 
 private:
-
 };
 
-#endif	/* SYSTEMCONTROLMOD_H */
-
+#endif /* SYSTEMCONTROLMOD_H */

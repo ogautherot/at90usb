@@ -12,7 +12,7 @@
  *      - no interrupts
  *
  * Timer 3: RTC
- *      - x64 prescaler, 250kHz clock
+ *      - x64 prescaler, 125kHz clock
  *      - interrupts @10ms
  * 
  * */
@@ -65,10 +65,25 @@ public:
             }
         }
     }
+    
+    void    StartTimer3(void)   {
+        TCCR3B |= (1 << CS32);
+    }
+
+    void    StopTimer3(void)   {
+        TCCR3B &= ~(1 << CS32);
+    }
+    
+    void    ResetTimer3(void)
+    {
+        TCNT3 = 0;
+    }
 
 private:
 
 };
+
+extern Timer16Mod timer13;
 
 #endif	/* TIMER16MOD_H */
 

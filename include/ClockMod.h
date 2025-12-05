@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   ClockMod.h
  * Author: olivier
  *
@@ -6,27 +6,33 @@
  */
 
 #ifndef CLOCKMOD_H
-#define	CLOCKMOD_H
+#define CLOCKMOD_H
 
+/** @brief Clock control module.
+ *
+ * The main role of this module is the USB PLL.
+ */
 #include <stdint.h>
 
-#include <avr/io.h>
-#include <avr/interrupt.h>
+#include "PowerMeter.h"
 
-class ClockMod
-{
+#include <avr/interrupt.h>
+#include <avr/io.h>
+
+class ClockMod {
 public:
     ClockMod();
-    //ClockMod(const ClockMod& orig);
-    //virtual ~ClockMod();
 
-    void Init(void);
-    void StartPll(void);
-
+    /** Check the state of the PLL lock.
+     */
+    uint8_t CheckPllLock(void)
+    {
+        return (PLLCSR & (1 << PLOCK));
+    }
 
 private:
-
 };
 
-#endif	/* CLOCKMOD_H */
+extern ClockMod clock;
 
+#endif /* CLOCKMOD_H */

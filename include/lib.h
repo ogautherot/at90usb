@@ -9,10 +9,9 @@ extern "C" {
 #endif
 
 #include <stdint.h>
-    
-    void sleep_us(uint16_t t);
-    int main(void);
 
+void sleep_us(uint16_t t);
+int main(void);
 
 #ifdef __cplusplus
 }

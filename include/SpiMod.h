@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   SpiMod.h
  * Author: olivier
  *
@@ -6,20 +6,19 @@
  */
 
 #ifndef SPIMOD_H
-#define	SPIMOD_H
+#define SPIMOD_H
 
-#include <avr/io.h>
+#include "PowerMeter.h"
+
 #include <avr/interrupt.h>
+#include <avr/io.h>
 
-class SpiMod
-{
+class SpiMod {
 public:
     SpiMod();
-    //SpiMod(const SpiMod& orig);
-    //virtual ~SpiMod();
+    // SpiMod(const SpiMod& orig);
+    // virtual ~SpiMod();
 private:
-
 };
 
-#endif	/* SPIMOD_H */
-
+#endif /* SPIMOD_H */
