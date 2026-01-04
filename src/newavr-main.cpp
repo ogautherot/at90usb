@@ -9,11 +9,6 @@
 #include <stdlib.h>
 
 #include "PowerMeter.h"
-#include <avr/io.h>
-#include <avr/sleep.h>
-#include <avr/interrupt.h>
-#include <avr/pgmspace.h>
-// #include <avr/wdt.h>
 
 #include "lib.h"
 #include "EventQueue.h"
@@ -57,94 +52,39 @@ FlashMod Flash;
 // OcmMod Ocm;
 
 Flash24aa512Mod Flash24aa512;
-KeysMod Keys;
 */
 
-AdcMod Adc;
+AdcMod adc0;
 Rtc rtc;
 TimerMod timers;
 GpioMod gpio;
+KeysMod Keys;
+EepromMod eeprom;
 
 EventQueue Queue;
+
+uint16_t errno = 0;
 
 /* ******** End of Global Variables - end of constructors ordering ******** */
 
 FUSES = {
     .low =
         // FUSE_CKSEL2 & FUSE_CKSEL3 & // CKSEL[3:1] = 110 for 8MHz crystal (FUSE_CKSELn)
-    FUSE_CKSEL1 &           // FUSE_CKSEL0 &
-    FUSE_SUT1 & FUSE_SUT0 & // SUT = 10 for 14 cycles after reset (fastest)
-    FUSE_CKOUT &            // Allow CKOUT (FUSE_CKOUT)
-    0xff,                   // FUSE_CKDIV8, // FUSE_CKDIV8 unprogrammed
+    FUSE_CKSEL1 & // FUSE_CKSEL0 &
+        FUSE_SUT1 & FUSE_SUT0 & // SUT = 10 for 14 cycles after reset (fastest)
+        FUSE_CKOUT & // Allow CKOUT (FUSE_CKOUT)
+        0xff, // FUSE_CKDIV8, // FUSE_CKDIV8 unprogrammed
     .high =
         // FUSE_BOOTRST &              // FUSE_BOOTRST: Move boot to upper flash
     FUSE_BOOTSZ0 & FUSE_BOOTSZ1 & // 11: 512 words, 10: 1K, 01: 2K, 00: 4K
-    //                            // FUSE_BOOTSZn: boot loader section size (128 words/page), 11 =
-    // FUSE_EESAVE &             // Preserve EEPROM upon flash erase
-    FUSE_WDTON &              // enable interrupts
-    FUSE_SPIEN & FUSE_JTAGEN, // & FUSE_OCDEN, // Enable JTAG and SPI
-    .extended =
-        FUSE_BODLEVEL2 & // FUSE_BODLEVELn: 011 for 2.6V
-        FUSE_HWBE        // FUSE_HWBE: Hardware Boot Enable
+                                  // // FUSE_BOOTSZn: boot loader section size (128 words/page)
+        FUSE_EESAVE & // Preserve EEPROM upon flash erase
+        FUSE_WDTON & // enable interrupts
+        FUSE_SPIEN & FUSE_JTAGEN, // & FUSE_OCDEN, // Enable JTAG and SPI
+    .extended = FUSE_BODLEVEL2 & // FUSE_BODLEVELn: 011 for 2.6V
+        FUSE_HWBE // FUSE_HWBE: Hardware Boot Enable
 };
 // ==========================================================================
-
-uint16_t Time(void);
-
-uint16_t Time(void)
-{
-    uint16_t before, after;
-
-    before = TCNT1;
-    sleep_us(10);
-    after = TCNT1;
-    after -= before;
-    return after;
-}
-
-uint8_t GetResetSource(void)
-{
-    return MCUSR;
-}
-
-/** Clocks initialization. The external crystal is assumed to be 8MHz.
- */
-void ClockInit(void)
-{
-    // PLL started in ClockMod
-    // while (clock.CheckPllLock()) {
-    //    // Do nothing
-    //}
-}
-
-void SetTimer0(void)
-{
-    // System tick
-    TCNT0 = 0;
-    TCCR0A = 0x02;
-    TCCR0B = 0x03; // Prescaler x64
-    OCR0A = 124;   // 1ms interrupt
-    OCR0B = 0;
-    TIMSK0 = 0x02;
-}
-
-void SetTimer1(void)
-{
-    // Fast timer for performance measurement
-    TCCR1A = 0;
-    TCCR1B = 1;
-    TCCR1C = 0;
-    TIMSK1 = 0;
-}
-
-/** Board Support package - Ports directions
- *
- */
-void PortsInit(void)
-{
-    PORTA = 0;
-    DDRA = 0x03;
-}
 
 /** SysInit: Hardware initialization
  */
@@ -167,13 +107,10 @@ void SysInit(void)
     PRR0 = 0; // Set bits matching unused peripherals
     PRR1 = (1 << PRUSART1);
 
-    PortsInit();
-    // ClockInit();
-    lcd.Init();
-    lcd.SendConstStr(LcdTitle);
-    lcd.SetAddress(0, LCD_LINE2);
-    lcd.SendConstStr(LcdNoLoad);
-    SetTimer0();
+    lcd.init();
+    lcd.sendConstStr(LcdTitle);
+    lcd.lcdSetAddress(0, LCD_LINE2);
+    lcd.sendConstStr(LcdNoLoad);
 
     sei();
 }
@@ -181,19 +118,31 @@ void SysInit(void)
 void SystemError(void)
 {
     // Set ports to inputs, except LEDs
-    DDRA |= 0x03;
-    while (1)
-    {
+    while (1) {
+        uint8_t i;
+
         PORTA = (1 == (PORTA & 0x03)) ? 2 : 1;
-        sleep_us(0xffff);
+        for (i = 0; i < 4; i++) {
+            sleep_us(0xffff);
+        }
     }
 }
 
 void DisplayTime()
 {
-    lcd.SetAddress(0, LCD_LINE2);
-    lcd.SendConstStr(TextRunning, sizeof(TextRunning) - 1);
-    lcd.SendStr(rtc.StrTime(), 8);
+    lcd.lcdSetAddress(0, LCD_LINE2);
+    if (errno != 0) {
+        // If errno != 0, display error code with RTC time
+        char buf[10] = "Err 00  ";
+        buf[4] = xdigit((errno >> 4) & 0x0f);
+        buf[5] = xdigit(errno & 0x0f);
+        lcd.sendStr(buf);
+    } else {
+        // If no error, display running time
+        lcd.sendConstStr(TextRunning, sizeof(TextRunning) - 1);
+    }
+    lcd.lcdSetAddress(0, LCD_LINE2 + 8);
+    lcd.sendStr(rtc.strTime(), 8);
 }
 
 /** main
@@ -208,28 +157,34 @@ int main(void)
     // WDTCSR &= ~(1 << WDE);
     SysInit();
 
-    //    Adc.StartConversion();
+    // gpio.SetLedCharging();
+    // gpio.SetLedSink();
+
+    //    adc0.StartConversion();
     //    rtc.StartRtc();
     //    timers.StartSystickTimer();
 
-    rtc.StartRtc();
+    rtc.startRtc();
 
-    while (1)
-    {
+    while (1) {
         EventStruct ev;
 
         // wdt_reset();
-        while (!Queue.IsEmpty())
-        {
-            Queue.Pop(&ev);
-            switch (ev.s.EvType)
-            {
+        while (!Queue.isEmpty()) {
+            Queue.pop(&ev);
+            switch (ev.s.EvType) {
+            case 0:
+                powerMeter.setLedSink(1);
+                powerMeter.setLedCharging(1);
+                break;
+
             case SYSTICK_ELAPSED:
                 // 2ms systick
                 break;
 
             case RTC_ELAPSED:
                 // 1s event
+                // errno = (errno + 1) & 0x1f;
                 DisplayTime();
                 break;
 

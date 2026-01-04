@@ -19,14 +19,14 @@ Flash24aa512Mod::Flash24aa512Mod()
 // Flash24aa512Mod::~Flash24aa512Mod() {
 // }
 
-int8_t Flash24aa512Mod::WriteByte(uint16_t addr, uint8_t v)
+int8_t Flash24aa512Mod::writeByte(uint16_t addr, uint8_t v)
 {
     (void)addr;
     (void)v;
     return 0;
 }
 
-int8_t Flash24aa512Mod::WritePage(uint16_t addr, uint8_t *buf, uint8_t len)
+int8_t Flash24aa512Mod::writePage(uint16_t addr, uint8_t* buf, uint8_t len)
 {
     (void)addr;
     (void)buf;
@@ -34,7 +34,7 @@ int8_t Flash24aa512Mod::WritePage(uint16_t addr, uint8_t *buf, uint8_t len)
     return 0;
 }
 
-int8_t Flash24aa512Mod::LoadBuf(uint8_t *buf, uint8_t offset, uint8_t length)
+int8_t Flash24aa512Mod::loadBuf(uint8_t* buf, uint8_t offset, uint8_t length)
 {
     (void)buf;
     (void)offset;
@@ -42,13 +42,13 @@ int8_t Flash24aa512Mod::LoadBuf(uint8_t *buf, uint8_t offset, uint8_t length)
     return 0;
 }
 
-uint8_t Flash24aa512Mod::ReadByte(uint16_t addr)
+uint8_t Flash24aa512Mod::readByte(uint16_t addr)
 {
     (void)addr;
     return 0;
 }
 
-int8_t Flash24aa512Mod::ReadPage(uint16_t addr, uint8_t len)
+int8_t Flash24aa512Mod::readPage(uint16_t addr, uint8_t len)
 {
     (void)addr;
     (void)len;

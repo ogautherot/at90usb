@@ -11,10 +11,9 @@
 #ifndef ANALOGCOMPMOD_H
 #define ANALOGCOMPMOD_H
 
-#include "PowerMeter.h"
+#include "arch.h"
 
-#include <avr/interrupt.h>
-#include <avr/io.h>
+#include "PowerMeter.h"
 
 class AnalogCompMod {
 public:

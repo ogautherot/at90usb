@@ -36,13 +36,11 @@
  *
  */
 
-#include "PowerMeter.h"
-
-#include <avr/interrupt.h>
-#include <avr/io.h>
-
-#include <stdint.h>
 #include <string.h>
+
+#include "arch.h"
+
+#include "PowerMeter.h"
 
 class TimerMod {
 public:
@@ -51,12 +49,9 @@ public:
     // TimerMod(const TimerMod& orig);
     // virtual ~TimerMod();
 
-    void StartAdcTimer(void)
-    {
-        TCCR0B |= 0x02;
-    }
+    void startAdcTimer(uint8_t delay);
 
-    void StopAdcTimer(void)
+    void stopAdcTimer(void)
     {
         TCCR0B &= ~((1 << CS02) | (1 << CS01) | (1 << CS00));
         TCNT0 = 0;
@@ -65,31 +60,33 @@ public:
     /** Start the counter, prescaler x128
      *  Counter (divider) x125, 2ms tick
      */
-    void StartSystickTimer(void)
+    void startSystickTimer(void)
     {
         TCCR2B |= (1 << CS22) | (1 << CS20);
     }
 
-    void StopSystickTimer(void)
+    void stopSystickTimer(void)
     {
         TCCR2B &= ~((1 << CS22) | (1 << CS21) | (1 << CS20));
         TCNT2 = 0;
     }
 
-    void StartTimer3(void)
+    void startTimer3(void)
     {
         TCCR3B |= (1 << CS32);
     }
 
-    void StopTimer3(void)
+    void stopTimer3(void)
     {
         TCCR3B &= ~((1 << CS32) | (1 << CS31) | (1 << CS30));
     }
 
-    void ResetTimer3(void)
+    void resetTimer3(void)
     {
         TCNT3 = 0;
     }
+
+    uint16_t getClockTime() { return TCNT1; }
 
 private:
 };

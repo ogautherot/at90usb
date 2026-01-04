@@ -12,8 +12,9 @@
  */
 
 #include <stdint.h>
+#include <string.h>
 
-#include <avr/io.h>
+#include "arch.h"
 
 #include "TwiMod.h"
 
@@ -24,13 +25,13 @@ public:
     Flash24aa512Mod();
     // virtual ~Flash24aa512Mod();
 
-    int8_t WriteByte(uint16_t addr, uint8_t v);
-    int8_t WritePage(uint16_t addr, uint8_t* buf, uint8_t len);
-    int8_t LoadBuf(uint8_t* buf, uint8_t offset, uint8_t length);
-    uint8_t ReadByte(uint16_t addr);
-    int8_t ReadPage(uint16_t addr, uint8_t len);
+    int8_t writeByte(uint16_t addr, uint8_t v);
+    int8_t writePage(uint16_t addr, uint8_t* buf, uint8_t len);
+    int8_t loadBuf(uint8_t* buf, uint8_t offset, uint8_t length);
+    uint8_t readByte(uint16_t addr);
+    int8_t readPage(uint16_t addr, uint8_t len);
 
-    int ClearBuf();
+    int clearBuf();
 
 private:
     uint8_t DeviceAddr;

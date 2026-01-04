@@ -8,10 +8,9 @@
 #ifndef SPIMOD_H
 #define SPIMOD_H
 
-#include "PowerMeter.h"
+#include "arch.h"
 
-#include <avr/interrupt.h>
-#include <avr/io.h>
+#include "PowerMeter.h"
 
 class SpiMod {
 public:

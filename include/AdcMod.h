@@ -14,10 +14,9 @@
 /** @file AdcMod.h
  */
 
-#include "PowerMeter.h"
+#include "arch.h"
 
-#include <avr/interrupt.h>
-#include <avr/io.h>
+#include "PowerMeter.h"
 
 /// ADC channel. Current sensor.
 #define ADC_CONV_INDEX_CURRENT 0
@@ -52,104 +51,111 @@ public:
      */
     AdcMod();
 
+    void enableInterrupts(void)
+    {
+        ADCSRA |= (1 << ADIE);
+    }
+
     /** Start a conversion. The interrupt-driven state machine will scan the
      * different test points.
      */
-    void StartConversion()
+    void startConversion()
     {
         ADCSRA |= (1 << ADSC);
     }
 
     /** Select current sensor input.
      */
-    void SelectCurrentSensor()
+    void selectCurrentSensor()
     {
         ADMUX = (ADMUX & 0xe0); // Channel 0
     }
 
     /** Select collector voltage input (dissipated power in the transistor).
      */
-    void SelectLoadSensor()
+    void selectLoadSensor()
     {
         ADMUX = (ADMUX & 0xe0) | 0x01; // Channel 1
     }
 
     /** Select battery voltage input.
      */
-    void SelectBatterySensor()
+    void selectBatterySensor()
     {
         ADMUX = (ADMUX & 0xe0) | 0x02; // Channel 2
     }
 
     /** Generic analog input selector.
      */
-    void SelectChannel(uint8_t c)
+    void selectChannel(uint8_t c)
     {
         ADMUX = (ADMUX & 0xe0) | (c & 0x1f);
     }
 
     /** Read the active analog input channel.
      */
-    uint8_t GetChannel()
+    uint8_t getChannel()
     {
         return ADMUX & 0x1f;
     }
 
     /** Read the ADC (16-bit register).
      */
-    uint16_t ReadConversion(void)
+    uint16_t readConversion(void)
     {
         return ADCW;
     }
 
     /** Get state-machine index.
      */
-    uint8_t GetIndex(void)
+    uint8_t getIndex(void)
     {
-        return ConvIndex;
+        return _ConvIndex;
     }
 
     /** Convert ADC reading to mA (ADC resolution of 2.5mA).
      */
-    uint16_t GetCurrent_mA(void)
+    uint16_t getCurrent_mA(void)
     {
-        return (CurrentSample << 1) | (CurrentSample >> 1);
+        return (_CurrentSample << 1) | (_CurrentSample >> 1);
     }
 
     /** Convert ADC reading to units of 100mV.
      */
-    uint16_t GetBatteryVoltage_100mV(void)
+    uint16_t getBatteryVoltage_100mV(void)
     {
-        return BatteryVoltageSample >> 2;
+        return _BatteryVoltageSample >> 2;
     }
 
     /** Set the index of the interrupt-driven state-machine.
      */
-    void SetIndex(uint8_t idx)
+    void setIndex(uint8_t idx)
     {
-        ConvIndex = idx;
+        _ConvIndex = idx;
     }
 
     /// ADC reading of the current sensor.
-    uint16_t CurrentSample;
+    uint16_t _CurrentSample;
     /// ADC reading of the battery voltage sensor.
-    uint16_t BatteryVoltageSample;
+    uint16_t _BatteryVoltageSample;
     /// ADC reading for the load voltage sensor.
-    uint16_t LoadVoltageSample;
+    uint16_t _LoadVoltageSample;
+
+    uint32_t _SampleCount;
 
 private:
     /// Index of the convsertor state-machine
-    uint8_t ConvIndex;
+    uint8_t _ConvIndex;
     /// Number of samples considered for the average per second.
-    uint16_t NumSamples;
+    uint16_t _NumSamples;
     /// Consolidated sum of the current samples.
-    uint32_t CurrentSum;
+    uint32_t _CurrentSum;
     /// Consolidated sum of the load voltage samples.
-    uint32_t LoadVoltageSum;
+    uint32_t _LoadVoltageSum;
     /// Consolidated sum of the battery voltage samples.
-    uint32_t BatteryVoltageSum;
+    uint32_t _BatteryVoltageSum;
 };
 
-extern AdcMod Adc;
+extern AdcMod adc0;
 
 #endif /* ADCMOD_H */

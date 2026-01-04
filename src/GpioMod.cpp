@@ -30,25 +30,28 @@ GpioMod::GpioMod()
     PORTA = 0xe0;
     DDRA = 0x1f;
 
-    // PORTB[7:4]: IN keys
-    PORTB = 0xff;
-    DDRB = 0;
+    // PORTB[4]: OUR Probe Sink Control
+    PORTB = 0xef;
+    DDRB = 0x10;
 
-    // LCD interface
-    PORTC = 0xff;
+    // PORTC[6:0]: LCD interface
+    // PORTC[7]: CLKOUT
+    PORTC = 0x00;
     DDRC = 0x7f;
 
-    // Ports D[1:0]: assigned to TWI if TWEN is set to 1
-    // Port D2: IN (CHOK)
-    // Port D3: OUT (EN)
+    // PORTD[1:0]: assigned to TWI if TWEN is set to 1
+    // PORTD[2]: IN (CHOK)
+    // PORTD[3]: OUT (EN)
+    // PORTD[7:4]: IN Keys inputs
     PORTD = 0xff;
     DDRD = 0;
 
-    // Not used on board
+    // PORTE not used in the application (PE2 as HWB input at boot)
     PORTE = 0xff;
     DDRE = 0;
 
-    // Analog inputs and JTAG. The JTAG interface disables automatically the GPIOs.
+    // PORTE[2:0]: ADC inputs
+    // PORTE[7:4]: JTAG interface
     PORTF = 0xff;
     DDRF = 0;
 }

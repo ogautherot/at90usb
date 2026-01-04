@@ -14,10 +14,9 @@
  */
 #include <stdint.h>
 
-#include "PowerMeter.h"
+#include "arch.h"
 
-#include <avr/interrupt.h>
-#include <avr/io.h>
+#include "PowerMeter.h"
 
 class ClockMod {
 public:
@@ -25,7 +24,7 @@ public:
 
     /** Check the state of the PLL lock.
      */
-    uint8_t CheckPllLock(void)
+    uint8_t checkPllLock(void)
     {
         return (PLLCSR & (1 << PLOCK));
     }
@@ -33,6 +32,7 @@ public:
 private:
 };
 
-extern ClockMod clock;
+/// @brief
+extern ClockMod clockMod;
 
 #endif /* CLOCKMOD_H */

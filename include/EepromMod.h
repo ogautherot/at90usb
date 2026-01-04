@@ -11,13 +11,12 @@
 /** @brief EEPROM driver.
  */
 
-#include "PowerMeter.h"
-
-#include <avr/interrupt.h>
-#include <avr/io.h>
-
 #include <stdint.h>
 #include <string.h>
+
+#include "arch.h"
+
+#include "PowerMeter.h"
 
 #define EEP_MODE_ERASE (1 << EEPM0)
 #define EEP_MODE_WRITE (2 << EEPM0)
@@ -32,23 +31,35 @@ public:
     // EepromMod(const EepromMod& orig);
     // virtual ~EepromMod();
 
-    static uint8_t GetByte(uint16_t addr);
-    static int8_t Get(uint8_t* dest, uint16_t addr, uint16_t len);
+    uint8_t getByte(uint16_t addr);
+    int8_t get(uint8_t* dest, uint16_t addr, uint16_t len);
+    void putByte(uint16_t addr, uint8_t val);
+    void put(uint8_t* src, uint16_t addr, uint16_t size);
 
-    static int8_t ProcessBlock(uint16_t addr, uint8_t mode, int16_t size);
-    static int8_t Step(void);
+    static int8_t processBlock(uint16_t addr, uint8_t mode, int16_t size);
+    static int8_t step(void);
 
-    int8_t EraseByte(uint16_t addr)
+    int8_t eraseByte(uint16_t addr)
     {
-        return ProcessBlock(addr, EEP_MODE_ERASE, 1);
+        return processBlock(addr, EEP_MODE_ERASE, 1);
     }
 
-    int8_t EraseBlock(uint16_t addr, uint16_t size)
+    int8_t eraseBlock(uint16_t addr, uint16_t size)
     {
-        return ProcessBlock(addr, EEP_MODE_ERASE, size);
+        return processBlock(addr, EEP_MODE_ERASE, size);
     }
 
 private:
+    /**
+     * @brief Wait for the EEPROM to be ready for the next operation.
+     */
+    void waitEepromReady(void)
+    {
+        while (EECR & (1 << EEPE)) {
+        }
+    }
 };
+
+extern EepromMod eeprom;
 
 #endif /* EEPROMMOD_H */

@@ -8,10 +8,9 @@
 #ifndef TWIMOD_H
 #define TWIMOD_H
 
-#include "PowerMeter.h"
+#include "arch.h"
 
-#include <avr/interrupt.h>
-#include <avr/io.h>
+#include "PowerMeter.h"
 
 class TwiMod {
 public:
@@ -19,12 +18,12 @@ public:
     // TwiMod(const TwiMod& orig);
     // virtual ~TwiMod();
 
-    uint8_t GetStatus()
+    uint8_t getStatus()
     {
         return TWSR;
     }
 
-    uint8_t GetData()
+    uint8_t getData()
     {
         return TWDR;
     }

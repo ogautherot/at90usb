@@ -8,17 +8,14 @@
 #ifndef FLASHMOD_H
 #define FLASHMOD_H
 
-#include "PowerMeter.h"
-
-#include <avr/io.h>
-
 #include <stdint.h>
 #include <string.h>
 
-using namespace std;
+#include "arch.h"
 
-#include <avr/interrupt.h>
-#include <avr/io.h>
+#include "PowerMeter.h"
+
+using namespace std;
 
 class FlashMod {
 public:
@@ -26,7 +23,7 @@ public:
     // FlashMod(const FlashMod& orig);
     // virtual ~FlashMod();
 
-    uint32_t GetSignature()
+    uint32_t getSignature()
     {
         return 0; // See SPMCSR
     }

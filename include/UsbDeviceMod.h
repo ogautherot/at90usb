@@ -8,12 +8,10 @@
 #ifndef USBDEVICEMOD_H
 #define USBDEVICEMOD_H
 
+#include "arch.h"
+
 #include "PowerMeter.h"
 #include "usb.h"
-
-#include <avr/interrupt.h>
-#include <avr/io.h>
-#include <avr/pgmspace.h>
 
 #define WCHAR_TO_STRING_DESCRIPTOR(Array)                                                                                            \
     {                                                                                                                                \
@@ -162,96 +160,96 @@ public:
     // UsbDeviceMod(const UsbDeviceMod& orig);
     // virtual ~UsbDeviceMod();
 
-    void Init(void);
+    void init(void);
 
-    void Poll(void);
+    void poll(void);
 
-    void ClearInterrupt(uint8_t mask)
+    void clearInterrupt(uint8_t mask)
     {
         UHINT = mask;
     }
 
-    uint8_t GetHostAddress()
+    uint8_t getHostAddress()
     {
         return UHADDR;
     }
 
-    uint8_t GetHostFrameNumber()
+    uint8_t getHostFrameNumber()
     {
         return UHFNUM;
     }
 
-    uint8_t GetHostFrameLength()
+    uint8_t getHostFrameLength()
     {
         return UHFLEN;
     }
 
-    uint8_t GetReqNumber()
+    uint8_t getReqNumber()
     {
         return UPINRQX;
     }
 
-    void ResetPipe(uint8_t mask)
+    void resetPipe(uint8_t mask)
     {
         UPRST = mask;
     }
 
-    uint8_t GetStatus()
+    uint8_t getStatus()
     {
         return UPSTAX;
     }
 
-    uint8_t GetPipeData()
+    uint8_t getPipeData()
     {
         return UPDATX;
     }
 
-    uint16_t GetDeviceFrameNumber()
+    uint16_t getDeviceFrameNumber()
     {
         return UDFNUML;
     }
 
-    uint8_t GetDeviceFrameNumberError()
+    uint8_t getDeviceFrameNumberError()
     {
         return UDMFN;
     }
 
-    uint8_t GetEndpointStatus()
+    uint8_t getEndpointStatus()
     {
         return UESTA0X;
     }
 
-    uint8_t GetControlStatus()
+    uint8_t getControlStatus()
     {
         return UESTA1X;
     }
 
-    uint16_t GetByteCount()
+    uint16_t getByteCount()
     {
         return UEBCX;
     }
 
-    uint8_t GetEndpointIntMask()
+    uint8_t getEndpointIntMask()
     {
         return UEINT;
     }
 
-    uint8_t GetEndpointErrorFlags()
+    uint8_t getEndpointErrorFlags()
     {
         return UPERRX;
     }
 
-    uint16_t GetEndpointBytesCount()
+    uint16_t getEndpointBytesCount()
     {
         return UPBCX;
     }
 
-    uint8_t GetPipeIntFlags()
+    uint8_t getPipeIntFlags()
     {
         return UPINT;
     }
 
-    uint8_t Endpoint_Configure(
+    uint8_t endpointConfigure(
         const uint8_t Address, const Endpoint_Type_t Type,
         const uint8_t Size, const uint8_t DoubleBank);
 

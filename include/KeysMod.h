@@ -8,10 +8,11 @@
 #ifndef KEYSMOD_H
 #define KEYSMOD_H
 
-#include "PowerMeter.h"
-
-#include <avr/io.h>
 #include <stdint.h>
+
+#include "arch.h"
+
+#include "PowerMeter.h"
 
 class KeysMod {
 public:
@@ -19,7 +20,12 @@ public:
     // KeysMod(const KeysMod& orig);
     // virtual ~KeysMod();
 
-    uint8_t ProbeKeys();
+    uint8_t probe();
+
+    uint8_t getLastState(void)
+    {
+        return LastState;
+    }
 
 private:
     uint8_t LastState;

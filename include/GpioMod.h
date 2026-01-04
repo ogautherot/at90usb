@@ -13,16 +13,9 @@
  *
  */
 
+#include "arch.h"
+
 #include "PowerMeter.h"
-
-#include <avr/interrupt.h>
-#include <avr/io.h>
-
-#define LED_SINK_MASK (1 << 0)
-#define LED_CHARGING_MASK (1 << 1)
-#define CTRL_SINK_MASK (1 << 2)
-#define CTRL_SHUNT_LOAD_MASK (1 << 3)
-#define CTRL_EXT_LOAD_MASK (1 << 4)
 
 class GpioMod {
 public:
@@ -30,7 +23,7 @@ public:
     // GpioMod(const GpioMod& orig);
     // virtual ~GpioMod();
 
-    void TogglePin(uint8_t port, uint8_t pin)
+    void togglePin(uint8_t port, uint8_t pin)
     {
         switch (port) {
         case 0:
@@ -54,7 +47,7 @@ public:
         }
     }
 
-    void SetPin(uint8_t port, uint8_t pin)
+    void setPin(uint8_t port, uint8_t pin)
     {
         switch (port) {
         case 0:
@@ -78,7 +71,7 @@ public:
         }
     }
 
-    void SetHiZ(uint8_t port, uint8_t pin)
+    void setHiZ(uint8_t port, uint8_t pin)
     {
         // Set first to input and then disable the pull-up
         switch (port) {
@@ -109,7 +102,7 @@ public:
         }
     }
 
-    void ClearHiZ(uint8_t port, uint8_t pin, uint8_t val)
+    void clearHiZ(uint8_t port, uint8_t pin, uint8_t val)
     {
         // Set the port value and switch to low impedance
         switch (port) {
@@ -164,58 +157,57 @@ public:
         }
     }
 
-    void SetLedSink(void)
+    void setLedSink(void)
     {
         PORTA |= LED_SINK_MASK;
     }
 
-    void ClearLedSink(void)
+    void clearLedSink(void)
     {
         PORTA &= ~LED_SINK_MASK;
     }
 
-    void SetLedCharging(void)
+    void setLedCharging(void)
     {
         PORTA |= LED_CHARGING_MASK;
     }
 
-    void ClearLedCharging(void)
+    void clearLedCharging(void)
     {
         PORTA &= ~LED_CHARGING_MASK;
     }
 
-    void SetControlSink(void)
+    void setControlSink(void)
     {
         PORTA |= CTRL_SINK_MASK;
     }
 
-    void ClearControlSink(void)
+    void clearControlSink(void)
     {
         PORTA &= ~CTRL_SINK_MASK;
     }
 
-    void SetControlShuntLoad(void)
+    void setControlShuntLoad(void)
     {
         PORTA |= CTRL_SHUNT_LOAD_MASK;
     }
 
-    void ClearControlShuntLoad(void)
+    void clearControlShuntLoad(void)
     {
         PORTA &= ~CTRL_SHUNT_LOAD_MASK;
     }
 
-    void SetControlExtLoad(void)
+    void setControlExtLoad(void)
     {
         PORTA |= CTRL_EXT_LOAD_MASK;
     }
 
-    void ClearControlExtLoad(void)
+    void clearControlExtLoad(void)
     {
         PORTA &= ~CTRL_EXT_LOAD_MASK;
     }
 
-    uint8_t
-    GetKeyMask(void)
+    uint8_t getKeyMask(void)
     {
         return (PORTB >> 4);
     }

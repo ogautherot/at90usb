@@ -18,73 +18,96 @@
 EventQueue::EventQueue()
 {
     memset(&Queue, 0, sizeof(Queue));
-    Flags = QUEUE_FLAGS_EMPTY; // .Empty = 1;
+    _Flags = { .Empty = 1, .Full = 0, .Overflow = 0 };
 }
 
-bool EventQueue::IsEmpty(void)
+bool EventQueue::isEmpty(void)
 {
-    return Flags & QUEUE_FLAGS_EMPTY;
+    return _Flags.Empty;
 }
 
-int8_t EventQueue::Push(uint8_t t, uint8_t arg0, uint16_t arg1)
+#pragma GCC optimize("Os")
+
+int8_t EventQueue::push(uint8_t t, uint8_t arg0, uint16_t arg1)
 {
-    uint8_t id = IdxIn;
-    uint8_t flags = Flags;
-    EventStruct *Event = &Events[id];
-    EventStruct myEvent = {.s =
-                               {.EvType = t, .Arg0 = arg0, .Arg1 = arg1}};
+    uint16_t ts = TCNT1;
+    uint8_t id = _IdxIn;
+    EventStruct* Event = &_Events[id];
+    EventStruct myEvent = { .s = { .EvType = t, .Arg0 = arg0, .Arg1 = arg1 } };
     uint8_t ret = 0;
 
-    if (flags & QUEUE_FLAGS_FULL)
-    {
-        flags |= QUEUE_FLAGS_OVF; // .Overflow = 1;
+#ifdef __AVR__
+    uint8_t sreg = SREG & 0x80;
+
+    cli();
+#endif
+
+    if (_Flags.Full) {
+        _Flags.Overflow = 1;
         ret = -1;
-        gpio.SetLedCharging();
-        gpio.SetLedSink();
-    }
-    else
-    {
-        flags &= ~QUEUE_FLAGS_EMPTY; // .Empty = 0;
+    } else {
+        _Flags.Empty = 0;
 
         Event->v = myEvent.v;
 
         id = (id + 1) & (QUEUE_SIZE - 1);
-        if (id == IdxOut)
-        {
-            flags |= QUEUE_FLAGS_FULL; // .Full = 1;
-            LED_SET_SINKING;
+        if (id == _IdxOut) {
+            _Flags.Full = 1;
         }
-        IdxIn = id;
+
+        _IdxIn = id;
     }
-    Flags = flags;
+
+    ts = TCNT1 - ts;
+    if (ts > _PushTime) {
+        _PushTime = ts;
+    }
+
+#ifdef __AVR__
+    SREG = sreg;
+#endif
+
     return ret;
 }
 
-int8_t EventQueue::Pop(EventStruct *ev)
+int8_t EventQueue::pop(EventStruct* ev)
 {
-    uint8_t flags = Flags;
+    uint16_t ts = TCNT1;
     int8_t ret = 0;
 
+#ifdef __AVR__
+    uint8_t sreg = SREG;
+
     cli();
-    if (flags & QUEUE_FLAGS_EMPTY)
-    {
+#else
+#endif
+
+    if (_Flags.Empty) {
         ret = -1;
-    }
-    else
-    {
-        uint8_t id = IdxOut;
-        ev->v = Events[id].v;
-        flags &= ~QUEUE_FLAGS_FULL; // .Full = 0;
-        LED_CLR_SINKING;
-        if (IdxIn == id)
-        {
-            flags |= QUEUE_FLAGS_EMPTY; // .Empty = 1;
-        }
+    } else {
+        uint8_t id = _IdxOut;
+
+        ev->v = _Events[id].v;
+        _Events[id].v = 0;
+        _Flags.Full = 0;
+
         id = (id + 1) & (QUEUE_SIZE - 1);
-        IdxOut = id;
+        if (_IdxIn == id) {
+            _Flags.Empty = 1;
+        }
+
+        _IdxOut = id;
     }
-    Flags = flags;
-    sei();
+
+    ts = TCNT1 - ts;
+    if (ts > _PopTime) {
+        _PopTime = ts;
+    }
+
+#ifdef __AVR__
+    SREG = sreg;
+#else
+#endif
 
     return ret;
 }

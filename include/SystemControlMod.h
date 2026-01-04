@@ -8,10 +8,9 @@
 #ifndef SYSTEMCONTROLMOD_H
 #define SYSTEMCONTROLMOD_H
 
-#include "PowerMeter.h"
+#include "arch.h"
 
-#include <avr/interrupt.h>
-#include <avr/io.h>
+#include "PowerMeter.h"
 
 class SystemControlMod {
 public:
@@ -19,14 +18,14 @@ public:
     // SystemControlMod(const SystemControlMod& orig);
     // virtual ~SystemControlMod();
 
-    void SetDebugRegister(uint8_t d)
+    void setDebugRegister(uint8_t d)
     {
         while (OCDR & 0x80)
             ;
         OCDR = d;
     }
 
-    uint8_t GetResetSource()
+    uint8_t getResetSource()
     {
         return MCUSR;
     }

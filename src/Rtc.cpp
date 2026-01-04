@@ -1,30 +1,30 @@
-/* 
+/*
  * File:   Rtc.cpp
  * Author: olivier
- * 
+ *
  * Created on July 29, 2024, 12:35 PM
  */
 
 #include "Rtc.h"
 
-
-Rtc::Rtc() {
+Rtc::Rtc()
+{
     LocalTs.second = 0;
     LocalTs.minute = 0;
     LocalTs.hour = 0;
 }
 
-void Rtc::Increment(void)
+void Rtc::increment(void)
 {
     uint8_t second = LocalTs.second;
-    
+
     ++second;
-    if (60 <= second)   {
+    if (60 <= second) {
         uint8_t minute = LocalTs.minute;
-        
+
         second -= 60;
         ++minute;
-        if (60 <= minute)   {
+        if (60 <= minute) {
             minute -= 60;
             ++LocalTs.hour;
         }
@@ -33,7 +33,7 @@ void Rtc::Increment(void)
     LocalTs.second = second;
 }
 
-void Rtc::GetTime(RtcBuf *ts)
+void Rtc::getTime(RtcBuf* ts)
 {
     // Repeat reading while seconds field moves
     do {
@@ -43,11 +43,12 @@ void Rtc::GetTime(RtcBuf *ts)
     } while (ts->second != LocalTs.second);
 }
 
-char *Rtc::StrTime(void) {
+char* Rtc::strTime(void)
+{
     static char buf[9] = "00:00:00";
     RtcBuf ts;
 
-    rtc.GetTime(&ts);
+    rtc.getTime(&ts);
     buf[0] = '0' + ts.hour / 10;
     buf[1] = '0' + ts.hour % 10;
     buf[3] = '0' + ts.minute / 10;
@@ -57,4 +58,3 @@ char *Rtc::StrTime(void) {
     buf[8] = 0;
     return buf;
 }
-

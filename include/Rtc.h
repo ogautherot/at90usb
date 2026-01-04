@@ -10,6 +10,8 @@
 
 #include <stdint.h>
 
+#include "arch.h"
+
 #include "TimerMod.h"
 
 typedef struct RtcBuf {
@@ -24,41 +26,41 @@ public:
     // Rtc(const Rtc& orig);
     // virtual ~Rtc();
 
-    void Increment(void);
+    void increment(void);
 
-    void StartRtc(void)
+    void startRtc(void)
     {
-        timers.StartTimer3();
+        timers.startTimer3();
     }
 
-    void StopRtc(void)
+    void stopRtc(void)
     {
-        timers.StopTimer3();
+        timers.stopTimer3();
     }
 
-    void ResetRtc(void)
+    void resetRtc(void)
     {
-        timers.ResetTimer3();
+        timers.resetTimer3();
     }
 
-    void GetTime(RtcBuf* ts);
+    void getTime(RtcBuf* ts);
 
-    uint8_t GetSecond()
+    uint8_t getSecond()
     {
         return LocalTs.second;
     }
 
-    uint8_t GetMinute()
+    uint8_t getMinute()
     {
         return LocalTs.minute;
     }
 
-    uint8_t GetHour()
+    uint8_t getHour()
     {
         return LocalTs.hour;
     }
 
-    char* StrTime(void);
+    char* strTime(void);
 
 private:
     volatile RtcBuf LocalTs;

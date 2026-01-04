@@ -29,19 +29,28 @@ typedef union EventStruct {
     } s;
 } EventStruct;
 
+typedef struct FlagsStruct {
+    uint8_t Empty : 1;
+    uint8_t Full : 1;
+    uint8_t Overflow : 1;
+    uint8_t : 5;
+} FlagsStruct;
+
 class EventQueue {
 public:
     EventQueue();
-    bool IsEmpty(void);
+    bool isEmpty(void);
 
-    int8_t Push(uint8_t t, uint8_t arg0, uint16_t arg1);
-    int8_t Pop(EventStruct* ev);
+    int8_t push(uint8_t t, uint8_t arg0, uint16_t arg1);
+    int8_t pop(EventStruct* ev);
 
 private:
-    uint8_t IdxIn;
-    uint8_t IdxOut;
-    uint8_t Flags;
-    EventStruct Events[QUEUE_SIZE];
+    uint8_t _IdxIn;
+    uint8_t _IdxOut;
+    uint16_t _PushTime;
+    uint16_t _PopTime;
+    FlagsStruct _Flags;
+    EventStruct _Events[QUEUE_SIZE];
 };
 
 typedef enum EventId {

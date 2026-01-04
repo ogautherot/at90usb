@@ -8,26 +8,26 @@
 #ifndef WATCHDOGMOD_H
 #define WATCHDOGMOD_H
 
-#include "PowerMeter.h"
+#include "arch.h"
 
-#include <avr/interrupt.h>
-#include <avr/io.h>
-#include <avr/wdt.h>
+#include "PowerMeter.h"
 
 class WatchdogMod {
 public:
     WatchdogMod()
     {
+        WDTCSR = 0x47;
     }
+
     // WatchdogMod(const WatchdogMod &orig);
     virtual ~WatchdogMod();
 
-    void WatchdogEnable(void)
+    void watchdogEnable(void)
     {
         wdt_enable(WDP3); // Timeout: 4s
     }
 
-    void WatchdogReset(void)
+    void watchdogReset(void)
     {
         wdt_reset();
     }

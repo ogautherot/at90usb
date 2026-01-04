@@ -11,13 +11,13 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "PowerMeter.h"
+#include "arch.h"
 
-#include <avr/io.h>
+#include "PowerMeter.h"
 
 class GpregMod {
 public:
-    static void SetReg(uint8_t idx, uint8_t val)
+    static void setReg(uint8_t idx, uint8_t val)
     {
         switch (idx) {
         case 0:
@@ -32,7 +32,7 @@ public:
         }
     }
 
-    static uint8_t GetReg(uint8_t idx)
+    static uint8_t getReg(uint8_t idx)
     {
         return (idx == 0) ? GPIOR0 : (idx == 1) ? GPIOR1
             : (idx == 2)                        ? GPIOR2
